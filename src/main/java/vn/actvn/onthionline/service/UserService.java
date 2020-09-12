@@ -34,6 +34,9 @@ public class UserService {
     @Autowired
     private UserProfileMapper userProfileMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     public UploadImgProfileResponse uploadImgProfile(UploadImgProfileRequest request, String username) throws ServiceException {
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
@@ -41,6 +44,10 @@ public class UserService {
             throw ServiceExceptionBuilder.newBuilder()
                     .addError(new ValidationErrorResponse("Img Base64", ValidationError.NotEmpty))
                     .build();
+            if (null == request.getFileTail())
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("File tail", ValidationError.NotEmpty))
+                        .build();
 
             Optional<User> user = Optional.ofNullable(userRepository.findByUsername(username));
             if (!user.isPresent())
@@ -49,12 +56,19 @@ public class UserService {
                         .build();
 
             // Save url to database
-            user.get().setAvatar(request.getImgBase64());
-            userRepository.save(user.get());
+            String filePath = imageService.saveFile(request.getImgBase64(), username, request.getFileTail());
 
+            if (null != filePath) {
+                user.get().setAvatar(filePath);
+                userRepository.save(user.get());
+            }
             return new UploadImgProfileResponse(true);
         } catch (ServiceException e) {
             throw e;
+        } catch (IOException e) {
+            throw ServiceExceptionBuilder.newBuilder()
+                    .addError(new ValidationErrorResponse("Something was", ValidationError.Wrong))
+                    .build();
         }
     }
 
@@ -66,10 +80,16 @@ public class UserService {
                         .addError(new ValidationErrorResponse("Something was", ValidationError.Wrong))
                         .build();
 
-            GetImgProfileResponse response = new GetImgProfileResponse(user.get().getAvatar());
+            String imgBase64 = imageService.getFile(user.get().getAvatar());
+
+            GetImgProfileResponse response = new GetImgProfileResponse(imgBase64);
             return response;
         } catch (ServiceException e) {
             throw e;
+        } catch (IOException e) {
+            throw ServiceExceptionBuilder.newBuilder()
+                    .addError(new ValidationErrorResponse("Something was", ValidationError.Wrong))
+                    .build();
         }
     }
 

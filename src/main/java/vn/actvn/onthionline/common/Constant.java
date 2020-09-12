@@ -16,4 +16,5 @@ public @interface Constant {
     String USER_AGENT = "userAgent";
     String ROLE_ADMIN = "ROLE_ADMIN";
     String ROLE_USER = "ROLE_USER";
+    String IMAGES_DIR_DEFAULT = "src/main/resources/images";
 }

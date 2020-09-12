@@ -10,4 +10,5 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class UploadImgProfileRequest {
     private String imgBase64;
+    private String fileTail;
 }
