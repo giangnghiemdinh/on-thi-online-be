@@ -80,6 +80,11 @@ public class UserService {
                         .addError(new ValidationErrorResponse("Something was", ValidationError.Wrong))
                         .build();
 
+            if (null == user.get().getAvatar())
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("Avatar", ValidationError.NotFound))
+                        .build();
+
             String imgBase64 = imageService.getFile(user.get().getAvatar());
 
             GetImgProfileResponse response = new GetImgProfileResponse(imgBase64);
