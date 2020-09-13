@@ -11,7 +11,7 @@ create table user (
 	phone varchar(30),
     avatar varchar(255),
     birthday timestamp,
-    gender int(1) default 0,
+    gender varchar(5) default 'Nữ',
     city varchar(20),
     class varchar(5),
     school varchar(50),
@@ -71,6 +71,7 @@ create table exam_history (
     created_date timestamp not null default current_timestamp,
     updated_date timestamp default current_timestamp,
     num_correct_ans int(5) not null,
+    exam_anser longblob not null,
     num_pause int(5) default 0,
     num_remake int(5) default 0,
     time int(10)
