@@ -50,7 +50,7 @@ public class User implements Serializable, UserDetails {
     private Date birthday;
 
     @Column(name = "gender")
-    private Integer gender;   // 0 - Nữ     1 - Nam
+    private String gender;
 
     @Column(name = "city")
     private String city;

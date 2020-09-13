@@ -18,7 +18,7 @@ public class UserProfileDto {
     private String phone;
     private String avatar;
     private Date birthday;
-    private Integer gender;
+    private String gender;
     private String city;
     private String clazz;
     private String school;
