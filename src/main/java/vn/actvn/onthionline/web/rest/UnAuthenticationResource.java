@@ -13,16 +13,20 @@ import vn.actvn.onthionline.common.*;
 import vn.actvn.onthionline.common.exception.ServiceException;
 import vn.actvn.onthionline.common.service.JwtUserDetailsService;
 import vn.actvn.onthionline.common.utils.ResponseUtil;
+import vn.actvn.onthionline.service.ExamService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin
-public class SecurityResource {
-    private Logger LOGGER = LoggerFactory.getLogger(SecurityResource.class);
+public class UnAuthenticationResource {
+    private Logger LOGGER = LoggerFactory.getLogger(UnAuthenticationResource.class);
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    private ExamService examService;
 
     @PostMapping(value = "/auth/token")
     public ResponseEntity<BaseDataResponse<LoginResponse>> createAuthenticationToken(@RequestBody BaseDataRequest<LoginRequest> request, HttpServletRequest httpRequest) throws ServiceException {
@@ -94,4 +98,17 @@ public class SecurityResource {
         }
     }
 
+    @PostMapping("/exam-by-subject")
+    public ResponseEntity<BaseDataResponse<GetExamBySubjectResponse>> getExamBySubject(@RequestBody BaseDataRequest<GetExamBySubjectRequest> request) {
+        try {
+            GetExamBySubjectResponse response = examService.getExamBySubject(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
 }

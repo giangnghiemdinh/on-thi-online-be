@@ -12,6 +12,7 @@ import vn.actvn.onthionline.client.dto.BaseDataResponse;
 
 import vn.actvn.onthionline.common.utils.ResponseUtil;
 import vn.actvn.onthionline.common.exception.ServiceException;
+import vn.actvn.onthionline.service.ExamService;
 import vn.actvn.onthionline.service.UserService;
 
 import java.security.Principal;
@@ -23,6 +24,9 @@ public class UsersResource {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ExamService examService;
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/upload-img")
@@ -98,4 +102,5 @@ public class UsersResource {
             return ResponseUtil.generateErrorResponse(e);
         }
     }
+
 }

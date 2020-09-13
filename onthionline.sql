@@ -44,6 +44,7 @@ create table exam (
     description text,
     is_active boolean not null,
     time int(10),
+    user_created varchar(255) not null,
     created_date timestamp not null default current_timestamp,
     updated_date timestamp default current_timestamp
 );

@@ -84,6 +84,9 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy = "userCreated")
     private List<ExamHistory> examHistories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userCreated")
+    private List<Comment> comments = new ArrayList<>();
+
     @Transient
     @JsonIgnore
     @Override

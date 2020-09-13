@@ -19,22 +19,30 @@ public class ExamHistory {
     private Integer id;
 
     @Column(name = "time")
-    private Integer time;
+    private Integer time;             // Thời gian làm bài
 
     @Column(name = "num_correct_ans")
-    private Integer numCorrectAns;
+    private Integer numCorrectAns;    // Số câu trả lời đúng
 
     @Column(name = "num_pause")
-    private Integer numPause;
+    private Integer numPause;         // Số lần tạm dừng
 
     @Column(name = "num_remake")
-    private Integer numRemake;
+    private Integer numRemake;        // Số lần làm lại
 
-    @Column(name = "last_modified_date")
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private Date createdDate;
+
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userCreated;
+
+    @OneToOne
+    @JoinColumn(name = "exam_id")
+    private Exam exam;
 }

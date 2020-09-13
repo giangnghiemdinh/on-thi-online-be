@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetOTPRequest {
-    private String username;
-    private String email;
+public class GetExamRequest {
+    private Integer id;
 }

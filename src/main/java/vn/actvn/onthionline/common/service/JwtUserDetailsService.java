@@ -159,16 +159,32 @@ public class JwtUserDetailsService implements UserDetailsService {
     public GetOTPResponse generateOtp(GetOTPRequest request, String purpose) throws ServiceException{
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
-            if (null == request.getUsername())
+            if (null == request.getUsername() && null == request.getEmail())
                 throw ServiceExceptionBuilder.newBuilder()
-                        .addError(new ValidationErrorResponse("Username", ValidationError.NotNull))
+                        .addError(new ValidationErrorResponse("Username or email", ValidationError.NotNull))
                         .build();
+            if (null != request.getUsername() && null != request.getEmail()) {
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("You must be use", "username or email"))
+                        .build();
+            }
 
-            Optional<User> user = Optional.ofNullable(userRepository.findByUsername(request.getUsername()));
-            if (!user.isPresent())
-                throw ServiceExceptionBuilder.newBuilder()
-                        .addError(new ValidationErrorResponse("Username", ValidationError.Invalid))
-                        .build();
+            Optional<User> user = null;
+            if (null != request.getUsername()) {
+                user = Optional.ofNullable(userRepository.findByUsername(request.getUsername()));
+                if (!user.isPresent())
+                    throw ServiceExceptionBuilder.newBuilder()
+                            .addError(new ValidationErrorResponse("Username", ValidationError.Invalid))
+                            .build();
+            }
+
+            if (null != request.getEmail()) {
+                user = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
+                if (!user.isPresent())
+                    throw ServiceExceptionBuilder.newBuilder()
+                            .addError(new ValidationErrorResponse("Email", ValidationError.Invalid))
+                            .build();
+            }
 
             Integer otpValue = otpService.generateOtp(user.get().getUsername() + (purpose.equals(Constant.OTP_LOGIN) ? Constant.LOGIN : Constant.FORGOT_PASSWORD));
 
