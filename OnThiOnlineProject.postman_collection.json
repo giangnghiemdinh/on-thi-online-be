@@ -405,7 +405,8 @@
 						"exam",
 						"add"
 					]
-				}
+				},
+				"description": "Api thêm bài thi mới dành cho admin (Y/c đăng nhập acc admin)"
 			},
 			"response": []
 		},
@@ -444,7 +445,7 @@
 						"exam-by-subject"
 					]
 				},
-				"description": "Lấy list bài thi theo môn học"
+				"description": "Api get list danh sách đề thi theo môn và theo khối (L10 hoặc L12) cho trang chủ. Nếu đăng nhập user thì sẽ có thêm lịch sử lần thi cuối cùng."
 			},
 			"response": []
 		},
@@ -485,7 +486,7 @@
 						"get"
 					]
 				},
-				"description": "Admin get full exam to update"
+				"description": "Api get full thông tin 1 bài thi dành cho admin"
 			},
 			"response": []
 		},
@@ -526,7 +527,7 @@
 						"get-exam"
 					]
 				},
-				"description": "User get exam to test"
+				"description": "Api get bài thi dành cho user để vào thi"
 			},
 			"response": []
 		},
@@ -608,7 +609,7 @@
 						"get-result"
 					]
 				},
-				"description": "Lấy kết quả theo id lịch sử"
+				"description": "Lấy kết quả theo id lịch sử (id lịch sử có thể lấy ở api get profile info haowjc get list exam by subject and grade)"
 			},
 			"response": []
 		},
@@ -649,7 +650,7 @@
 						"get-all"
 					]
 				},
-				"description": "Get tất cả bài thi cho admin"
+				"description": "Get list tất cả bài thi dành cho admin"
 			},
 			"response": []
 		},
@@ -690,7 +691,7 @@
 						"change-active"
 					]
 				},
-				"description": "Get tất cả bài thi cho admin"
+				"description": "Api để chuyển trạng thái active(true/false) cho bài thi. Nếu trạng thái là false thì user sẽ không tìm thấy được bài thi đó nữa."
 			},
 			"response": []
 		},
@@ -731,7 +732,7 @@
 						"update"
 					]
 				},
-				"description": "Get tất cả bài thi cho admin"
+				"description": "Api để update bài thi dành cho admin"
 			},
 			"response": []
 		},
@@ -770,7 +771,7 @@
 						"ranking-by-exam"
 					]
 				},
-				"description": "Lấy list bài thi theo môn học"
+				"description": "Api lấy ra danh sách 20 người có điểm thi cao nhất của 1 bài thi"
 			},
 			"response": []
 		}
