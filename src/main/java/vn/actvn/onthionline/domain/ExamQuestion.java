@@ -40,7 +40,7 @@ public class ExamQuestion implements Serializable {
     private String option4;
 
     @Column(name = "suggestion")
-    private String suggestion;   // Gợi ý
+    private String suggestion;
 
     @Column(name = "correct_answer")
     private String correctAnswer;
@@ -76,7 +76,6 @@ public class ExamQuestion implements Serializable {
                 ", correctAnswer='" + correctAnswer + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", updatedDate='" + updatedDate + '\'' +
-                ", exam='" + exam + '\'' +
                 '}';
     }
 }

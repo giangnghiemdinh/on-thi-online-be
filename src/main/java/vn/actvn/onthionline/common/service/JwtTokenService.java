@@ -57,7 +57,7 @@ public class JwtTokenService {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-    public String generateToken(UserDetails userDetails, HttpServletRequest httpRequest) {
+    public String generateToken(User userDetails, HttpServletRequest httpRequest) {
         Map<String, Object> claims = new HashMap<>();
         final List<String> roles = userDetails.getAuthorities()
                 .stream()
@@ -67,6 +67,7 @@ public class JwtTokenService {
         claims.put(Constant.ROLE, roles);
         claims.put(Constant.IP, getClientIp(httpRequest));
         claims.put(Constant.USER_AGENT, getUserAgent(httpRequest));
+        claims.put(Constant.FULL_NAME, userDetails.getFullname());
 
         return generateToken(claims, userDetails.getUsername());
     }

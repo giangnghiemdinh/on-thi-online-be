@@ -27,6 +27,9 @@ public class Comment implements Serializable {
     @Column(name = "parent_id")
     private String parentId;
 
+    @Column(name = "is_like")
+    private Boolean isLike;
+
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -45,19 +48,18 @@ public class Comment implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, parentId, createdDate, updatedDate, userCreated, exam);
+        return Objects.hash(id, content, parentId, createdDate, isLike, updatedDate, userCreated, exam);
     }
 
     @Override
     public String toString() {
-        return "ExamQuestion{" +
+        return "Comment{" +
                 "id='" + id + '\'' +
                 ", content='" + content + '\'' +
                 ", parentId='" + parentId + '\'' +
+                ", isLike='" + isLike + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", updatedDate='" + updatedDate + '\'' +
-                ", userCreated='" + userCreated + '\'' +
-                ", exam='" + exam + '\'' +
                 '}';
     }
 }

@@ -57,7 +57,7 @@ public class Role implements Serializable, GrantedAuthority {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Role{" +
                 "id='" + id + '\'' +
                 ", roleName='" + roleName + '\'' +
                 ", description='" + roleName + '\'' +

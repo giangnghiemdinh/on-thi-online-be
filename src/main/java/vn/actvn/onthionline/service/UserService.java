@@ -12,10 +12,8 @@ import vn.actvn.onthionline.common.exception.ServiceExceptionBuilder;
 import vn.actvn.onthionline.common.exception.ValidationErrorResponse;
 import vn.actvn.onthionline.common.utils.ServiceUtil;
 import vn.actvn.onthionline.domain.User;
-import vn.actvn.onthionline.repository.RoleRepository;
 import vn.actvn.onthionline.repository.UserRepository;
 import vn.actvn.onthionline.service.dto.UserProfileDto;
-import vn.actvn.onthionline.service.mapper.UserMapper;
 import vn.actvn.onthionline.service.mapper.UserProfileMapper;
 
 import java.io.IOException;

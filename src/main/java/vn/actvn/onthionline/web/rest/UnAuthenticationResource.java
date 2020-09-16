@@ -16,6 +16,7 @@ import vn.actvn.onthionline.common.utils.ResponseUtil;
 import vn.actvn.onthionline.service.ExamService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @RestController
 @CrossOrigin
@@ -99,9 +100,23 @@ public class UnAuthenticationResource {
     }
 
     @PostMapping("/exam-by-subject")
-    public ResponseEntity<BaseDataResponse<GetExamBySubjectResponse>> getExamBySubject(@RequestBody BaseDataRequest<GetExamBySubjectRequest> request) {
+    public ResponseEntity<BaseDataResponse<GetExamBySubjectResponse>> getExamBySubject(@RequestBody BaseDataRequest<GetExamBySubjectRequest> request, Principal currentUser) {
         try {
-            GetExamBySubjectResponse response = examService.getExamBySubject(request.getBody());
+            GetExamBySubjectResponse response = examService.getExamBySubject(request.getBody(), currentUser != null ? currentUser.getName() : null);
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PostMapping("/ranking-by-exam")
+    public ResponseEntity<BaseDataResponse<GetRankingInExamResponse>> getExamBySubject(@RequestBody BaseDataRequest<GetRankingInExamRequest> request) {
+        try {
+            GetRankingInExamResponse response = examService.rankingByExam(request.getBody());
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);

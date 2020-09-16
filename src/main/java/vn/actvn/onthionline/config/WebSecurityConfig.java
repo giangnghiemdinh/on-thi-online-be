@@ -12,10 +12,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import vn.actvn.onthionline.common.exception.CustomAuthenticationEntryPoint;
 import vn.actvn.onthionline.common.service.JwtRequestFilter;
 
 import java.util.Arrays;
@@ -45,10 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity
+                .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
+                .and()
                 .authorizeRequests()
-                .antMatchers("/auth/token", "/register", "/forgot-password", "/generate-otp", "/change-password")
+                .antMatchers("/auth/token", "/register", "/forgot-password", "/generate-otp", "/change-password", "/exam-by-subject", "/ranking-by-exam")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -74,5 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new CustomAuthenticationEntryPoint();
     }
 }

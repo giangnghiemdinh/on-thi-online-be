@@ -1,5 +1,6 @@
 package vn.actvn.onthionline.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,8 +62,9 @@ public class Exam implements Serializable {
     @OneToMany(mappedBy = "exam")
     private List<ExamQuestion> examQuestions = new ArrayList<>();
 
-    @OneToOne(mappedBy = "exam")
-    private ExamHistory examHistory;
+    @JsonIgnore
+    @OneToMany(mappedBy = "exam")
+    private List<ExamHistory> examHistory;
 
     @OneToMany(mappedBy = "exam")
     private List<Comment> comments = new ArrayList<>();
@@ -74,7 +76,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "ExamQuestion{" +
+        return "Exam{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
@@ -84,12 +86,8 @@ public class Exam implements Serializable {
                 ", description='" + description + '\'' +
                 ", isActive='" + isActive + '\'' +
                 ", time='" + time + '\'' +
-                ", userCreated='" + userCreated + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", updatedDate='" + updatedDate + '\'' +
-                ", examHistory='" + examHistory + '\'' +
-                ", examQuestions='" + examQuestions + '\'' +
-                ", comments='" + comments + '\'' +
                 '}';
     }
 }

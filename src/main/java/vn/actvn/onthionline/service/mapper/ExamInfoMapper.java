@@ -1,8 +1,10 @@
 package vn.actvn.onthionline.service.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.actvn.onthionline.domain.Exam;
+import vn.actvn.onthionline.repository.ExamHistoryRepository;
 import vn.actvn.onthionline.service.dto.ExamInfoDto;
 
 @Service

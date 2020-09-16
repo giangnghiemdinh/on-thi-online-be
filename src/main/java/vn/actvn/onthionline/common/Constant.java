@@ -14,7 +14,11 @@ public @interface Constant {
     String ROLE = "ROLE";
     String IP = "ip";
     String USER_AGENT = "userAgent";
+    String FULL_NAME = "fullname";
     String ROLE_ADMIN = "ROLE_ADMIN";
     String ROLE_USER = "ROLE_USER";
+    Boolean ACTIVE_STATUS = true;
+    Boolean DE_ACTIVE_STATUS = false;
+    String DO_EXAM = " (Thi lại lần ";
     String IMAGES_DIR_DEFAULT = "src/main/resources/images";
 }

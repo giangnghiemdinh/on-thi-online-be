@@ -18,7 +18,7 @@ import vn.actvn.onthionline.service.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/api")
 public class UsersResource {
     private Logger LOGGER = LoggerFactory.getLogger(UsersResource.class);
 
@@ -29,7 +29,7 @@ public class UsersResource {
     private ExamService examService;
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/upload-img")
+    @PostMapping("/profile/upload-img")
     public ResponseEntity<BaseDataResponse<UploadImgProfileResponse>> uploadImgProfile(@RequestBody BaseDataRequest<UploadImgProfileRequest> request, Principal currentUser) {
         try {
             UploadImgProfileResponse response = userService.uploadImgProfile(request.getBody(), currentUser.getName());
@@ -44,7 +44,7 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/get-img")
+    @PostMapping("/profile/get-img")
     public ResponseEntity<BaseDataResponse<GetImgProfileResponse>> getImgProfile(Principal currentUser) {
         try {
             GetImgProfileResponse response = userService.getImgProfile(currentUser.getName());
@@ -59,7 +59,7 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/get")
+    @PostMapping("/profile/get")
     public ResponseEntity<BaseDataResponse<GetProfileInfoResponse>> getProfileInfo(Principal currentUser) {
         try {
             GetProfileInfoResponse response = userService.getProfileInfo(currentUser.getName());
@@ -74,7 +74,7 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/update")
+    @PostMapping("/profile/update")
     public ResponseEntity<BaseDataResponse<UpdateProfileInfoResponse>> updateProfileInfo(@RequestBody BaseDataRequest<UpdateProfileInfoRequest> request, Principal currentUser) {
         try {
             UpdateProfileInfoResponse response = userService.updateProfile(request.getBody(), currentUser.getName());
@@ -89,7 +89,7 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/change-password")
+    @PostMapping("/profile/change-password")
     public ResponseEntity<BaseDataResponse<ChangePasswordResponse>> changePassword(@RequestBody BaseDataRequest<ChangePasswordRequest> request, Principal currentUser) {
         try {
             ChangePasswordResponse response = userService.changePassword(request.getBody(), currentUser.getName());
@@ -103,4 +103,48 @@ public class UsersResource {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/profile/get-exam")
+    public ResponseEntity<BaseDataResponse<GetExamFromUserResponse>> getExam(@RequestBody BaseDataRequest<GetExamFromUserRequest> request) {
+        try {
+            GetExamFromUserResponse response = examService.getExamForUser(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/profile/do-exam")
+    public ResponseEntity<BaseDataResponse<DoExamResponse>> doExam(@RequestBody BaseDataRequest<DoExamRequest> request, Principal currentUser) {
+        try {
+            DoExamResponse response = examService.doExam(request.getBody(), currentUser.getName());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/profile/get-result")
+    public ResponseEntity<BaseDataResponse<GetResultResponse>> getResult(@RequestBody BaseDataRequest<GetResultRequest> request,  Principal currentUser) {
+        try {
+            GetResultResponse response = examService.getResult(request.getBody(), currentUser.getName());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
 }

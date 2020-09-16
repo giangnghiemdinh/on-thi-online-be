@@ -30,4 +30,5 @@ public @interface ValidationError {
     String Exists = "validation.constraints.Exists";
     String Disabled = "validation.constraints.Disabled";
     String Wrong = "validation.constraints.Wrong";
+    String ACCESS_DENIED = "validation.constraints.AccessDenied";
 }

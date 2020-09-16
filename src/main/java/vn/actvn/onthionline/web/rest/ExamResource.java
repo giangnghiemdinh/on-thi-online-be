@@ -24,7 +24,7 @@ public class ExamResource {
     @Autowired
     private ExamService examService;
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<BaseDataResponse<AddExamResponse>> addExam(@RequestBody BaseDataRequest<AddExamRequest> request, Principal currentUser) {
         try {
@@ -39,11 +39,53 @@ public class ExamResource {
         }
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/get-exam")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/update")
+    public ResponseEntity<BaseDataResponse<UpdateExamResponse>> updateExam(@RequestBody BaseDataRequest<UpdateExamRequest> request) {
+        try {
+            UpdateExamResponse response = examService.update(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/get")
     public ResponseEntity<BaseDataResponse<GetExamResponse>> getExam(@RequestBody BaseDataRequest<GetExamRequest> request) {
         try {
             GetExamResponse response = examService.getExam(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/get-all")
+    public ResponseEntity<BaseDataResponse<GetAllExamResponse>> getAllExam(@RequestBody BaseDataRequest<?> request) {
+        try {
+            GetAllExamResponse response = examService.getAllExam();
+            return ResponseUtil.wrap(response);
+        }  catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/change-active")
+    public ResponseEntity<BaseDataResponse<ChangeActiveExamResponse>> changeActiveExam(@RequestBody BaseDataRequest<ChangeActiveExamRequest> request) {
+        try {
+            ChangeActiveExamResponse response = examService.changeActive(request.getBody());
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);

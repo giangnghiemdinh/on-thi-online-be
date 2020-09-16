@@ -19,7 +19,7 @@ import vn.actvn.onthionline.domain.User;
 import vn.actvn.onthionline.repository.RoleRepository;
 import vn.actvn.onthionline.repository.UserRepository;
 import vn.actvn.onthionline.service.dto.EmailDto;
-import vn.actvn.onthionline.service.mapper.UserMapper;
+import vn.actvn.onthionline.service.mapper.UserRegisterMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserRegisterMapper userRegisterMapper;
 
     @Autowired
     private UserRepository userRepository;
@@ -58,7 +58,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_USER"));
+                AuthorityUtils.createAuthorityList(Constant.ROLE_USER));
     }
 
 
@@ -80,14 +80,17 @@ public class JwtUserDetailsService implements UserDetailsService {
                         .addError(new ValidationErrorResponse("Username or password/ otp", ValidationError.Invalid))
                         .build();
 
+            if (user.getIsActive() == false)
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("User", ValidationError.Disabled))
+                        .build();
+
             if (null != request.getPassword()) {
                 if (!bcryptEncoder.matches(request.getPassword(), user.getPassword()))
                     throw ServiceExceptionBuilder.newBuilder()
                             .addError(new ValidationErrorResponse("Username or password/ otp", ValidationError.Invalid))
                             .build();
-
-            }
-            else {
+            } else {
                 if (!otpService.validateOTP(request.getUsername() + Constant.LOGIN, request.getOtp())) {
                     throw ServiceExceptionBuilder.newBuilder()
                             .addError(new ValidationErrorResponse("Username or password/ otp", ValidationError.Invalid))
@@ -132,7 +135,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                         .addError(new ValidationErrorResponse("Email", ValidationError.Exists))
                         .build();
 
-            User newUser = userMapper.toEntity(request.getUserRegister());
+            User newUser = userRegisterMapper.toEntity(request.getUserRegister());
             newUser.setPassword(bcryptEncoder.encode(request.getUserRegister().getPassword()));
             newUser.setCreatedDate(new Date());
             newUser.setIsActive(true);

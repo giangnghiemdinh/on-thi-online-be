@@ -52,8 +52,15 @@ public class ExamMapper {
         if (examDto == null)
             return null;
 
-        ModelMapper modelMapper = new ModelMapper();
-        Exam exam = modelMapper.map(examDto,Exam.class);
+        Exam exam = new Exam();
+        exam.setId(examDto.getId());
+        exam.setImage(examDto.getImage());
+        exam.setName(examDto.getName());
+        exam.setDescription(examDto.getDescription());
+        exam.setSubject(examDto.getSubject());
+        exam.setTime(examDto.getTime());
+//        List<ExamQuestion> examQuestions = examDto.getExamQuestions().stream().map(examQuestionMapper::toEntity).collect(Collectors.toList());
+//        exam.setExamQuestions(examQuestions);
         return exam;
     }
 }
