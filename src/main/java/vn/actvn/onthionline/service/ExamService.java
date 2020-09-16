@@ -108,7 +108,7 @@ public class ExamService {
                         .addError(new ValidationErrorResponse("Subject", ValidationError.NotNull))
                         .build();
 
-            Optional<List<Exam>> exams = examRepository.findAllExamActiveBySubject(request.getSubject());
+            Optional<List<Exam>> exams = examRepository.findAllExamActiveBySubjectAAndGrade(request.getSubject(), request.getGrade());
             GetExamBySubjectResponse response = new GetExamBySubjectResponse();
             List<ExamInfoDto> examInfoDtos = new ArrayList<>();
 

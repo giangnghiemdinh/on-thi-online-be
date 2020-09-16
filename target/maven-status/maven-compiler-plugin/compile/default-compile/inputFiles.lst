@@ -26,7 +26,6 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/mapper/ExamForUserMapper.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/UpdateProfileInfoRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/CommentService.java
-/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/config/WebSocketConfig.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/mapper/ExamHistoryMapper.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/BaseDataResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/config/MailConfig.java
@@ -105,4 +104,3 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/mapper/ExamQuestionMapper.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/dto/ExamQuestionDto.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/RegisterResponse.java
-/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/web/rest/ChatBotResource.java

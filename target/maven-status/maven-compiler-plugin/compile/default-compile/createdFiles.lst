@@ -19,14 +19,12 @@ vn/actvn/onthionline/repository/ExamQuestionRepository.class
 vn/actvn/onthionline/service/dto/RoleDto.class
 vn/actvn/onthionline/client/dto/GetOTPResponse.class
 vn/actvn/onthionline/domain/User.class
-vn/actvn/onthionline/config/WebSocketConfig.class
 vn/actvn/onthionline/client/dto/RegisterRequest.class
 vn/actvn/onthionline/domain/ExamHistory.class
 vn/actvn/onthionline/web/rest/UnAuthenticationResource.class
 vn/actvn/onthionline/domain/Role.class
 vn/actvn/onthionline/client/dto/GetImgProfileResponse.class
 vn/actvn/onthionline/common/Constant.class
-vn/actvn/onthionline/web/rest/ChatBotResource.class
 vn/actvn/onthionline/domain/ExamQuestion.class
 vn/actvn/onthionline/common/exception/ServiceException.class
 vn/actvn/onthionline/client/dto/LogoutResponse.class

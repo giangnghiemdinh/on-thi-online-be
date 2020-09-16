@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetExamBySubjectRequest {
     private String subject;
+    private String grade;
 }

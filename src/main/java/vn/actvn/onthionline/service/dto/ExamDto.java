@@ -14,6 +14,7 @@ public class ExamDto {
     private String name;
     private String image;
     private String subject;
+    private String grade;
     private String description;
     private Integer time;
     private List<ExamQuestionDto> examQuestions;

@@ -30,6 +30,9 @@ public class Exam implements Serializable {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "grade")
+    private String grade;      // Cấp
+
     @Column(name = "subject")
     private String subject;    // Môn học
 

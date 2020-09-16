@@ -26,6 +26,7 @@ public class ExamMapper {
         examDto.setName(exam.getName());
         examDto.setDescription(exam.getDescription());
         examDto.setSubject(exam.getSubject());
+        examDto.setGrade(exam.getGrade());
         examDto.setTime(exam.getTime());
         List<ExamQuestionDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
@@ -41,6 +42,7 @@ public class ExamMapper {
         examDto.setImage(exam.getImage());
         examDto.setName(exam.getName());
         examDto.setDescription(exam.getDescription());
+        examDto.setGrade(exam.getGrade());
         examDto.setSubject(exam.getSubject());
         examDto.setTime(exam.getTime());
         List<ExamQuestionDto> examQuestionDtos = examQuestions.stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
@@ -59,8 +61,7 @@ public class ExamMapper {
         exam.setDescription(examDto.getDescription());
         exam.setSubject(examDto.getSubject());
         exam.setTime(examDto.getTime());
-//        List<ExamQuestion> examQuestions = examDto.getExamQuestions().stream().map(examQuestionMapper::toEntity).collect(Collectors.toList());
-//        exam.setExamQuestions(examQuestions);
+        exam.setGrade(examDto.getGrade());
         return exam;
     }
 }

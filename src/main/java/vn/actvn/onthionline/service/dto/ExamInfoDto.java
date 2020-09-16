@@ -12,6 +12,7 @@ public class ExamInfoDto {
     private String name;
     private String image;
     private String subject;
+    private String grade;
     private String description;
     private Integer numQuestion;
     private Integer numPeopleDid;

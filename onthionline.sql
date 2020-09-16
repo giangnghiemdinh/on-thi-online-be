@@ -39,6 +39,7 @@ create table exam (
     name varchar(255) not null,
     image varchar(255),
     subject varchar(50) not null,
+    grade varchar(50) not null,
     num_question int(5) not null,
     num_people_did int(5) not null,
     description text,
