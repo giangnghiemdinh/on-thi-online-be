@@ -21,5 +21,6 @@ public interface ExamRepository extends JpaRepository<Exam, Integer>  {
     @Query(value = "from Exam e where e.id = :id")
     Optional<Exam> findById(@Param("id") Integer id);
 
+    @Query(value = "from Exam e where e.isActive = true")
     List<Exam> findAll();
 }
