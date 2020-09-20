@@ -819,10 +819,39 @@
 		{
 			"name": "Get Completed Exam",
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kMTEiLCJpcCI6IjA6MDowOjA6MDowOjA6MSIsInVzZXJBZ2VudCI6IlBvc3RtYW5SdW50aW1lLzcuMjYuNSIsImZ1bGxuYW1lIjoiTmdoacOqbSDEkMOsbmggR2lhbmcgMDYiLCJleHAiOjE2MDA2Mzc5NDMsImlhdCI6MTYwMDYxOTk0M30.xng0hwesVHG7I1KQGqUQoXPJaBHfy68m9Xmvu3oAqF7uUISrdX4IFe5XU_qncwycY03xXdKN28yl3Ltych12TQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\": {\n       \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8888/api/profile/get-completed-exam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"profile",
+						"get-completed-exam"
+					]
 				},
 				"description": "Lấy danh sách các bài thi đã làm hiển thị trên trang chủ"
 			},
