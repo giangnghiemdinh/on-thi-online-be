@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.actvn.onthionline.domain.ExamHistory;
-import vn.actvn.onthionline.domain.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +17,9 @@ public interface ExamHistoryRepository extends JpaRepository<ExamHistory, Intege
 
     @Query(value = "select count(h) from ExamHistory h where h.exam.id = :examId and h.userCreated.id = :userId")
     Integer countAllByExamIdAndUserId(@Param("examId") Integer examId, @Param("userId") Integer userId);
+
+    @Query(value = "select distinct h.exam.id from ExamHistory h where h.userCreated.id = :userId")
+    List<Integer> findAllExamIdByUserId(@Param("userId") Integer userId);
 
     @Query(value = "from ExamHistory h where h.id = (select max(h.id) from ExamHistory h where h.exam.id = :examId and h.userCreated.id = :userId)")
     Optional<ExamHistory> findLastHistory(@Param("examId") Integer examId, @Param("userId") Integer userId);

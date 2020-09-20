@@ -774,6 +774,59 @@
 				"description": "Api lấy ra danh sách 20 người có điểm thi cao nhất của 1 bài thi"
 			},
 			"response": []
+		},
+		{
+			"name": "Delete List Exam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfQURNSU4iXSwic3ViIjoiYWRtaW4iLCJpcCI6IjA6MDowOjA6MDowOjA6MSIsInVzZXJBZ2VudCI6IlBvc3RtYW5SdW50aW1lLzcuMjYuNSIsImZ1bGxuYW1lIjoiVMOgaSBraG_huqNuIGFkbWluIiwiZXhwIjoxNjAwNjMzMTQ2LCJpYXQiOjE2MDA2MTUxNDZ9.pqnwOibvdvwjaVTqoXYUAIe-HB_gP2l81Auy167l03LSYG62MobUo5DIhADzigy-7g3OmIwoec3h294O9fDBOA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\": {\n        \"examIds\": [\n            1,\n            4, \n            6\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/exam/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"exam",
+						"delete"
+					]
+				},
+				"description": "Dùng để xoá 1 hoặc nhiều exam"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Completed Exam",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Lấy danh sách các bài thi đã làm hiển thị trên trang chủ"
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

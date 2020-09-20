@@ -71,11 +71,14 @@ public class ExamResource {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/get-all")
-    public ResponseEntity<BaseDataResponse<GetAllExamResponse>> getAllExam(@RequestBody BaseDataRequest<?> request) {
+    public ResponseEntity<BaseDataResponse<GetAllExamResponse>> getAllExam(@RequestBody BaseDataRequest<GetAllExamRequest> request) {
         try {
-            GetAllExamResponse response = examService.getAllExam();
+            GetAllExamResponse response = examService.getAllExam(request.getBody());
             return ResponseUtil.wrap(response);
-        }  catch (Exception e) {
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
             LOGGER.error(this.getClass().getName(), e);
             return ResponseUtil.generateErrorResponse(e);
         }
@@ -86,6 +89,21 @@ public class ExamResource {
     public ResponseEntity<BaseDataResponse<ChangeActiveExamResponse>> changeActiveExam(@RequestBody BaseDataRequest<ChangeActiveExamRequest> request) {
         try {
             ChangeActiveExamResponse response = examService.changeActive(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/delete")
+    public ResponseEntity<BaseDataResponse<DeleteExamResponse>> deleteExam(@RequestBody BaseDataRequest<DeleteExamRequest> request) {
+        try {
+            DeleteExamResponse response = examService.deleteExam(request.getBody());
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);

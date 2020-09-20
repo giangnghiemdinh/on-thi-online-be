@@ -147,4 +147,16 @@ public class UsersResource {
             return ResponseUtil.generateErrorResponse(e);
         }
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/profile/get-completed-exam")
+    public ResponseEntity<BaseDataResponse<GetCompletedExamResponse>> getCompletedExam(@RequestBody BaseDataRequest<?> request,  Principal currentUser) {
+        try {
+            GetCompletedExamResponse response = examService.getCompletedExam(currentUser.getName());
+            return ResponseUtil.wrap(response);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
 }

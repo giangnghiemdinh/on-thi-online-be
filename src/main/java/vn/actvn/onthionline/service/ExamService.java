@@ -3,6 +3,8 @@ package vn.actvn.onthionline.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.actvn.onthionline.client.dto.*;
@@ -11,16 +13,14 @@ import vn.actvn.onthionline.common.ValidationError;
 import vn.actvn.onthionline.common.exception.ServiceException;
 import vn.actvn.onthionline.common.exception.ServiceExceptionBuilder;
 import vn.actvn.onthionline.common.exception.ValidationErrorResponse;
+import vn.actvn.onthionline.common.utils.OptimizedPage;
 import vn.actvn.onthionline.common.utils.ServiceUtil;
 import vn.actvn.onthionline.domain.*;
 import vn.actvn.onthionline.repository.ExamHistoryRepository;
 import vn.actvn.onthionline.repository.ExamQuestionRepository;
 import vn.actvn.onthionline.repository.ExamRepository;
 import vn.actvn.onthionline.repository.UserRepository;
-import vn.actvn.onthionline.service.dto.ExamAnswerDto;
-import vn.actvn.onthionline.service.dto.ExamDto;
-import vn.actvn.onthionline.service.dto.ExamInfoDto;
-import vn.actvn.onthionline.service.dto.RankingDto;
+import vn.actvn.onthionline.service.dto.*;
 import vn.actvn.onthionline.service.mapper.*;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class ExamService {
             Exam exam = examMapper.toEntity(request.getExam());
             exam.setNumQuestion(request.getExam().getExamQuestions().size());
             exam.setNumPeopleDid(0);
-            exam.setActive(true);
+            exam.setActive(false);
             exam.setUserCreated(username);
             exam.setCreatedDate(new Date());
             Exam examSaved = examRepository.save(exam);
@@ -108,7 +108,7 @@ public class ExamService {
                         .addError(new ValidationErrorResponse("Subject", ValidationError.NotNull))
                         .build();
 
-            Optional<List<Exam>> exams = examRepository.findAllExamActiveBySubjectAAndGrade(request.getSubject(), request.getGrade());
+            Optional<List<Exam>> exams = examRepository.findAllExamActiveBySubjectAndGrade(request.getSubject(), request.getGrade());
             GetExamBySubjectResponse response = new GetExamBySubjectResponse();
             List<ExamInfoDto> examInfoDtos = new ArrayList<>();
 
@@ -139,12 +139,23 @@ public class ExamService {
         }
     }
 
-    public GetAllExamResponse getAllExam() {
-        List<Exam> exams = examRepository.findAll();
-        List<ExamDto> examDtos = exams.stream().map(examMapper::toDto).collect(Collectors.toList());
-        GetAllExamResponse response = new GetAllExamResponse();
-        response.setExamDtos(examDtos);
-        return response;
+    public GetAllExamResponse getAllExam(GetAllExamRequest request) throws ServiceException {
+        try {
+            if (null == request)
+                ServiceUtil.generateEmptyPayloadError();
+            if (request.getPageNumber() < 0)
+                request.setPageNumber(0);
+            if (request.getPageSize() < 1)
+                request.setPageSize(Constant.DEFAULT_PAGE_SIZE);
+            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()),
+                    request.getName(), request.getSubject(), request.getGrade(), request.getIsActive());
+            Page<ExamDto> examDtos = exams.map(examMapper::toDto);
+            GetAllExamResponse response = new GetAllExamResponse();
+            response.setExamDtos(OptimizedPage.convert(examDtos));
+            return response;
+        } catch (ServiceException e) {
+            throw e;
+        }
     }
 
     public GetExamResponse getExam(GetExamRequest request) throws ServiceException {
@@ -385,5 +396,60 @@ public class ExamService {
         } catch (ServiceException e) {
             throw e;
         }
+    }
+
+    public DeleteExamResponse deleteExam(DeleteExamRequest request) throws ServiceException {
+        try {
+            if (null == request) ServiceUtil.generateEmptyPayloadError();
+
+            List<DeleteExamDto> deleteExamDtos = new ArrayList<>();
+            for (Integer id : request.getExamIds()) {
+                DeleteExamDto deleteExamDto = new DeleteExamDto();
+                deleteExamDto.setId(id);
+                Optional<Exam> exam = examRepository.findById(id);
+                if (!exam.isPresent()) {
+                    deleteExamDto.setSuccess(false);
+                    deleteExamDto.setError("Exam Id invalid");
+                    deleteExamDtos.add(deleteExamDto);
+                    continue;
+                }
+                if (exam.get().getExamHistory().size() > 0) {
+                    deleteExamDto.setSuccess(false);
+                    deleteExamDto.setError("Exam can't be delete");
+                    deleteExamDtos.add(deleteExamDto);
+                    continue;
+                }
+                exam.get().getExamQuestions().forEach(question -> {
+                    examQuestionRepository.delete(question);
+                });
+                examRepository.delete(exam.get());
+                deleteExamDto.setSuccess(true);
+                deleteExamDto.setError(null);
+                deleteExamDtos.add(deleteExamDto);
+            }
+            DeleteExamResponse response = new DeleteExamResponse();
+            response.setDeleteExamDtos(deleteExamDtos);
+            return response;
+        } catch (ServiceException e) {
+            throw e;
+        }
+    }
+
+    public GetCompletedExamResponse getCompletedExam(String username) {
+        User user = userRepository.findByUsername(username);
+        List<CompletedExamDto> completedExamDtos = new ArrayList<>();
+        List<Integer> examId = examHistoryRepository.findAllExamIdByUserId(user.getId());
+        examId.stream().forEach(id -> {
+            Optional<ExamHistory> examHistory = examHistoryRepository.findLastHistory(id, user.getId());
+            CompletedExamDto completedExamDto = new CompletedExamDto();
+            completedExamDto.setId(examHistory.get().getExam().getId());
+            completedExamDto.setLastHistory(examHistoryMapper.toDto(examHistory.get()));
+            completedExamDto.setName(examHistory.get().getExam().getName());
+            completedExamDtos.add(completedExamDto);
+        });
+
+        GetCompletedExamResponse response = new GetCompletedExamResponse();
+        response.setCompletedExamDtos(completedExamDtos);
+        return response;
     }
 }

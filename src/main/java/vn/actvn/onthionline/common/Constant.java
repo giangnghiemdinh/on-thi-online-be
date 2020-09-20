@@ -21,4 +21,5 @@ public @interface Constant {
     Boolean DE_ACTIVE_STATUS = false;
     String DO_EXAM = " (Thi lại lần ";
     String IMAGES_DIR_DEFAULT = "src/main/resources/images";
+    Integer DEFAULT_PAGE_SIZE = 50;
 }

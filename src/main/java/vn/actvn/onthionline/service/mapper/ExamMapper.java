@@ -28,6 +28,10 @@ public class ExamMapper {
         examDto.setSubject(exam.getSubject());
         examDto.setGrade(exam.getGrade());
         examDto.setTime(exam.getTime());
+        if (exam.getExamHistory().size() > 0)
+            examDto.setCanDelete(false);
+        else
+            examDto.setCanDelete(true);
         List<ExamQuestionDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
         return examDto;
