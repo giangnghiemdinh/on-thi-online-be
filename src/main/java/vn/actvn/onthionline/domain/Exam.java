@@ -77,20 +77,4 @@ public class Exam implements Serializable {
         return Objects.hash(id, name, image, subject, numQuestion, numPeopleDid, description, isActive, time, userCreated, createdDate, updatedDate, examHistory, examQuestions, comments);
     }
 
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", subject='" + subject + '\'' +
-                ", numQuestion='" + numQuestion + '\'' +
-                ", numPeopleDid='" + numPeopleDid + '\'' +
-                ", description='" + description + '\'' +
-                ", isActive='" + isActive + '\'' +
-                ", time='" + time + '\'' +
-                ", createdDate='" + createdDate + '\'' +
-                ", updatedDate='" + updatedDate + '\'' +
-                '}';
-    }
 }

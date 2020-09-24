@@ -147,8 +147,7 @@ public class ExamService {
                 request.setPageNumber(0);
             if (request.getPageSize() < 1)
                 request.setPageSize(Constant.DEFAULT_PAGE_SIZE);
-            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()),
-                    request.getName(), request.getSubject(), request.getGrade(), request.getIsActive());
+            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getSearch());
             Page<ExamDto> examDtos = exams.map(examMapper::toDto);
             GetAllExamResponse response = new GetAllExamResponse();
             response.setExamDtos(OptimizedPage.convert(examDtos));
@@ -332,11 +331,30 @@ public class ExamService {
                         .addError(new ValidationErrorResponse("Exam", ValidationError.NotNull))
                         .build();
 
-            // Update exam
             Optional<Exam> exam = examRepository.findById(request.getExam().getId());
+
+            // Update list question
+            List<ExamQuestion> examQuestions = request.getExam().getExamQuestions()
+                    .stream().map(examQuestionMapper::toEntity).collect(Collectors.toList());
+            examQuestions.stream().forEach(question -> {
+                if (null != question.getId()) {
+                    Optional<ExamQuestion> examQuestion = examQuestionRepository.findByIdAndExamId(question.getId(), exam.get().getId());
+                    if (examQuestion.isPresent()) {
+                        question.setCreatedDate(examQuestion.get().getCreatedDate());
+                        question.setUpdatedDate(new Date());
+                        question.setExam(examQuestion.get().getExam());
+                    }
+                } else {
+                    question.setCreatedDate(new Date());
+                    question.setExam(exam.get());
+                }
+            });
+            examQuestionRepository.saveAll(examQuestions);
+
+            // Update exam
             Exam newExam = examMapper.toEntity(request.getExam());
             newExam.setNumPeopleDid(exam.get().getNumPeopleDid());
-            newExam.setNumQuestion(exam.get().getNumQuestion());
+            newExam.setNumQuestion(request.getExam().getExamQuestions().size());
             newExam.setActive(exam.get().isActive());
             newExam.setUserCreated(exam.get().getUserCreated());
             newExam.setCreatedDate(exam.get().getCreatedDate());
@@ -353,16 +371,6 @@ public class ExamService {
                         return examUpdate;
                     });
 
-            // Update list question
-            List<ExamQuestion> examQuestions = request.getExam().getExamQuestions()
-                    .stream().map(examQuestionMapper::toEntity).collect(Collectors.toList());
-            examQuestions.stream().forEach(question -> {
-                Optional<ExamQuestion> examQuestion = examQuestionRepository.findById(question.getId());
-                question.setCreatedDate(examQuestion.get().getCreatedDate());
-                question.setUpdatedDate(new Date());
-                question.setExam(examQuestion.get().getExam());
-            });
-            examQuestionRepository.saveAll(examQuestions);
 
             UpdateExamResponse response = new UpdateExamResponse();
             response.setExam(examMapper.toDto(updatedExam.get()));

@@ -17,6 +17,7 @@ public class ExamDto {
     private String grade;
     private String description;
     private Integer time;
+    private Boolean isActive;
     private Boolean canDelete;
     private List<ExamQuestionDto> examQuestions;
 }

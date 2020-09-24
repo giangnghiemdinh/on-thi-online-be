@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestion, Integer>  {
 
-    @Query(value = "from ExamQuestion e where e.id = :id")
-    Optional<ExamQuestion> findById(@Param("id") Integer id);
+    @Query(value = "from ExamQuestion e where e.id = :id and e.exam.id = :examId")
+    Optional<ExamQuestion> findByIdAndExamId(@Param("id") Integer id, @Param("examId") Integer examId);
 }

@@ -10,8 +10,5 @@ import lombok.NoArgsConstructor;
 public class GetAllExamRequest {
     private Integer pageNumber;
     private Integer pageSize;
-    private String name;
-    private String subject;
-    private String grade;
-    private Boolean isActive;
+    private String search;
 }

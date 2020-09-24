@@ -23,10 +23,8 @@ public interface ExamRepository extends JpaRepository<Exam, Integer>  {
     @Query(value = "from Exam e where e.id = :id")
     Optional<Exam> findById(@Param("id") Integer id);
 
-    @Query(value = "from Exam e where (:name is null or e.name like %:name%) \n" +
-            "and (:subject is null or e.subject like %:subject%) \n" +
-            "and (:grade is null or e.grade like %:grade%) \n" +
-            "and (:isActive is null or e.isActive = :isActive)")
-    Page<Exam> findAllExam(Pageable pageable, @Param("name") String name, @Param("subject") String subject,
-                           @Param("grade") String grade, @Param("isActive") Boolean isActive);
+    @Query(value = "from Exam e where (e.name like %:search%) \n" +
+            "or (e.subject like %:search%) \n" +
+            "or (e.grade like %:search%) \n")
+    Page<Exam> findAllExam(Pageable pageable, @Param("search") String search);
 }

@@ -32,6 +32,7 @@ public class ExamMapper {
             examDto.setCanDelete(false);
         else
             examDto.setCanDelete(true);
+        examDto.setIsActive(exam.isActive());
         List<ExamQuestionDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
         return examDto;
@@ -49,6 +50,11 @@ public class ExamMapper {
         examDto.setGrade(exam.getGrade());
         examDto.setSubject(exam.getSubject());
         examDto.setTime(exam.getTime());
+        if (exam.getExamHistory().size() > 0)
+            examDto.setCanDelete(false);
+        else
+            examDto.setCanDelete(true);
+        examDto.setIsActive(exam.isActive());
         List<ExamQuestionDto> examQuestionDtos = examQuestions.stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
         return examDto;
