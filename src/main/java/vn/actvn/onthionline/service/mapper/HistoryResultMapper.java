@@ -19,8 +19,11 @@ public class HistoryResultMapper {
         HistoryResultDto historyResultDto = new HistoryResultDto();
         historyResultDto.setNumAnswer(history.getNumAns());
         historyResultDto.setNumCorrectAns(history.getNumCorrectAns());
-        historyResultDto.setTime(history.getTime());
+        historyResultDto.setDoTime(history.getTime());
         historyResultDto.setTotalQuestion(history.getExam().getNumQuestion());
+        historyResultDto.setTotalTime(history.getExam().getTime());
+        historyResultDto.setExamName(history.getExam().getName());
+        historyResultDto.setExamDescription(history.getExam().getDescription());
 
         List<ExamQuestionResultDto> examQuestionResultDtos =
                 history.getExam().getExamQuestions().stream().map(examQuestionResultMapper::toDto).collect(Collectors.toList());

@@ -113,6 +113,20 @@ public class UnAuthenticationResource {
         }
     }
 
+    @PostMapping("/get-exam")
+    public ResponseEntity<BaseDataResponse<GetExamFromUserResponse>> getExam(@RequestBody BaseDataRequest<GetExamFromUserRequest> request) {
+        try {
+            GetExamFromUserResponse response = examService.getExamForUser(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
     @PostMapping("/ranking-by-exam")
     public ResponseEntity<BaseDataResponse<GetRankingInExamResponse>> getExamBySubject(@RequestBody BaseDataRequest<GetRankingInExamRequest> request) {
         try {

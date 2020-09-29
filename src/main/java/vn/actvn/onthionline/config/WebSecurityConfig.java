@@ -61,7 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/generate-otp",
                         "/change-password",
                         "/exam-by-subject",
-                        "/ranking-by-exam")
+                        "/ranking-by-exam",
+                        "/get-exam")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

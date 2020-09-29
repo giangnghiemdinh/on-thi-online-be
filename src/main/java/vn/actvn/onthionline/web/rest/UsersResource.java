@@ -104,21 +104,6 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/profile/get-exam")
-    public ResponseEntity<BaseDataResponse<GetExamFromUserResponse>> getExam(@RequestBody BaseDataRequest<GetExamFromUserRequest> request) {
-        try {
-            GetExamFromUserResponse response = examService.getExamForUser(request.getBody());
-            return ResponseUtil.wrap(response);
-        } catch (ServiceException e) {
-            LOGGER.error(this.getClass().getName(), e);
-            return ResponseUtil.generateErrorResponse(e);
-        } catch (Exception e) {
-            LOGGER.error(this.getClass().getName(), e);
-            return ResponseUtil.generateErrorResponse(e);
-        }
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/profile/do-exam")
     public ResponseEntity<BaseDataResponse<DoExamResponse>> doExam(@RequestBody BaseDataRequest<DoExamRequest> request, Principal currentUser) {
         try {
@@ -154,6 +139,21 @@ public class UsersResource {
         try {
             GetCompletedExamResponse response = examService.getCompletedExam(currentUser.getName());
             return ResponseUtil.wrap(response);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/get-last-history")
+    public ResponseEntity<BaseDataResponse<GetLastHistoryResponse>> getLastHistory(@RequestBody BaseDataRequest<GetLastHistoryRequest> request,  Principal currentUser) {
+        try {
+            GetLastHistoryResponse response = examService.getLastHistory(request.getBody() ,currentUser.getName());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
         } catch (Exception e) {
             LOGGER.error(this.getClass().getName(), e);
             return ResponseUtil.generateErrorResponse(e);

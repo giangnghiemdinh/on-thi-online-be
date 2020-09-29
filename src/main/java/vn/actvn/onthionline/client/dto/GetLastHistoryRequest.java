@@ -1,4 +1,4 @@
-package vn.actvn.onthionline.service.dto;
+package vn.actvn.onthionline.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompletedExamDto {
-    private Integer id;
-    private String name;
+public class GetLastHistoryRequest {
+    private Integer examId;
 }

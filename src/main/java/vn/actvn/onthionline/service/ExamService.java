@@ -119,18 +119,6 @@ public class ExamService {
 
             examInfoDtos = exams.get().stream().map(ExamInfoMapper::toDto).collect(Collectors.toList());
 
-            if (null != username) {
-                User user = userRepository.findByUsername(username);
-                examInfoDtos.stream().forEach(exam -> {
-                    Optional<ExamHistory> examHistory = examHistoryRepository.findLastHistory(exam.getId(), user.getId());
-                    LOGGER.info("Get last history exam {}", examHistory);
-                    if (!examHistory.isPresent())
-                        exam.setLastHistory(null);
-                    else
-                        exam.setLastHistory(examHistoryMapper.toDto(examHistory.get()));
-                });
-            }
-
             LOGGER.info("Get list exam by subject");
             response.setExam(examInfoDtos);
             return response;
@@ -451,7 +439,6 @@ public class ExamService {
             Optional<ExamHistory> examHistory = examHistoryRepository.findLastHistory(id, user.getId());
             CompletedExamDto completedExamDto = new CompletedExamDto();
             completedExamDto.setId(examHistory.get().getExam().getId());
-            completedExamDto.setLastHistory(examHistoryMapper.toDto(examHistory.get()));
             completedExamDto.setName(examHistory.get().getExam().getName());
             completedExamDtos.add(completedExamDto);
         });
@@ -459,5 +446,28 @@ public class ExamService {
         GetCompletedExamResponse response = new GetCompletedExamResponse();
         response.setCompletedExamDtos(completedExamDtos);
         return response;
+    }
+
+    public GetLastHistoryResponse getLastHistory(GetLastHistoryRequest request, String username) throws ServiceException {
+        try {
+            if (null == request) ServiceUtil.generateEmptyPayloadError();
+            if (null == request.getExamId())
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("Exam Id", ValidationError.NotNull))
+                        .build();
+
+            User user = userRepository.findByUsername(username);
+            Optional<ExamHistory> examHistory = examHistoryRepository.findLastHistory(request.getExamId(), user.getId());
+            LOGGER.info("Get last history exam {}", examHistory);
+            GetLastHistoryResponse response = new GetLastHistoryResponse();
+            if (!examHistory.isPresent())
+                response.setLastHistory(null);
+            else
+                response.setLastHistory(examHistoryMapper.toDto(examHistory.get()));
+
+            return response;
+        } catch (ServiceException e) {
+            throw e;
+        }
     }
 }

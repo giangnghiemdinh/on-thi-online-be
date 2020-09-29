@@ -10,9 +10,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryResultDto {
+    private String examName;
+    private String examDescription;
     private Integer numAnswer;
     private Integer numCorrectAns;
-    private Integer time;
     private Integer totalQuestion;
+    private Integer doTime;
+    private Integer totalTime;
     private List<ExamQuestionResultDto> examQuestions;
 }

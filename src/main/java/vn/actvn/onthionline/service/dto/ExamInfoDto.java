@@ -17,5 +17,4 @@ public class ExamInfoDto {
     private Integer numQuestion;
     private Integer numPeopleDid;
     private Integer time;
-    private ExamHistoryDto lastHistory;
 }
