@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"body\": {\n        \"username\":\"giangnd6\",\n        \"password\":\"123456\"\n    }\n}",
+					"raw": "{\n    \"body\": {\n        \"username\":\"admin\",\n        \"password\":\"123456\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,7 +163,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyBNYXN0ZXIiLCJleHAiOjE2MDEzNjY1NTMsImlhdCI6MTYwMTM0ODU1M30.f2k6pRUTj-LZtAO2fyQeWbdRG8lnvuEcYmjmjyod_0Er-X29sDy9kfYB3oRrgApW1sFlflGX_RhXMfIs_wpw8Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTUzNjc1MywiaWF0IjoxNjAxNTE4NzUzfQ.BHAPa-87UnY_4eDoI6aZftS-jPq4Y2rynFcyCSSJJE3PtyMV3HJm8Bu6DitfSLAubMFy__3YHuqYl-cDGJ0HTA",
 							"type": "string"
 						}
 					]
@@ -243,7 +243,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyBNYXN0ZXIiLCJleHAiOjE2MDAyMDY0NDYsImlhdCI6MTYwMDE4ODQ0Nn0.j0eFMwfMjR1ukxhV0frY5oPC5qXv5qdh9AsXsmPYHgPDN932wcT56_JOOniQDRM8Y31IxD0K3Tdn2qW-kwJnAg",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -280,7 +280,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"body\": {\n        \"username\":\"giangnd6\",\n        \"otp\": 694162,\n        \"newPassword\":\"nghiemgiang99\"\n    }\n}",
+					"raw": "{\n    \"body\": {\n        \"username\":\"giangnd6\",\n        \"otp\": 816252,\n        \"newPassword\":\"nghiemgiang99\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -578,7 +578,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfQURNSU4iXSwic3ViIjoiYWRtaW4iLCJpcCI6IjA6MDowOjA6MDowOjA6MSIsInVzZXJBZ2VudCI6IlBvc3RtYW5SdW50aW1lLzcuMjYuNSIsImZ1bGxuYW1lIjoiVMOgaSBraG_huqNuIGFkbWluIiwiZXhwIjoxNjAwNzA1MTgzLCJpYXQiOjE2MDA2ODcxODN9.Ceea5uMaz25ngNY5YCBQGYnwJpsgjFFlCiPkG4oNEvF-tmivuS6vIGF4nfhS28bZ4p122xxi-BC1485DKCEN7A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfQURNSU4iXSwic3ViIjoiYWRtaW4iLCJpcCI6IjA6MDowOjA6MDowOjA6MSIsInVzZXJBZ2VudCI6IlBvc3RtYW5SdW50aW1lLzcuMjYuNSIsImZ1bGxuYW1lIjoiVMOgaSBraG_huqNuIGFkbWluIiwiZXhwIjoxNjAxNTM3MTIwLCJpYXQiOjE2MDE1MTkxMjB9.nu5pzwck9k99Si_CayzXOvMCHlzZ5eFM9aeg6YFvu6IqwrX25KOfOjkDJhsaM0PL_mn1sTSjkbIfa_UxYr2Ihg",
 							"type": "string"
 						}
 					]
@@ -587,7 +587,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"body\": {\n        \"pageNumber\":0,\n        \"pageSize\":10,\n        \"search\":\"Toán\"\n    }\n}",
+					"raw": "{\n    \"body\": {\n        \"pageNumber\":0,\n        \"pageSize\":10,\n        \"inputSearch\":\"\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -822,7 +822,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTM4NDQwMiwiaWF0IjoxNjAxMzY2NDAyfQ.IkFpvGqiQQOfQVvTQpfx-Nogf7sHSllW4jZAx6D8d2o6XcRZ53pQZYhARkYr-OsF0ttOXZdSA1K-w_IOXALShQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTUzNTg3NywiaWF0IjoxNjAxNTE3ODc3fQ.eJFmkJaRwS33iN219Ri4K90d-lAJ1vcLO5gW9JalUsm35xGUFhuvQ5G-mqsjuPb7YK70jz8zVJH27qqHs7OdPg",
 							"type": "string"
 						}
 					]
@@ -862,7 +862,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTM4NDQwMiwiaWF0IjoxNjAxMzY2NDAyfQ.IkFpvGqiQQOfQVvTQpfx-Nogf7sHSllW4jZAx6D8d2o6XcRZ53pQZYhARkYr-OsF0ttOXZdSA1K-w_IOXALShQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTUzNjc1MywiaWF0IjoxNjAxNTE4NzUzfQ.BHAPa-87UnY_4eDoI6aZftS-jPq4Y2rynFcyCSSJJE3PtyMV3HJm8Bu6DitfSLAubMFy__3YHuqYl-cDGJ0HTA",
 							"type": "string"
 						}
 					]
@@ -871,7 +871,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"body\": {\n       \"examId\":3\n    }\n}",
+					"raw": "{\n    \"body\": {\n        \"pageNumber\":0,\n        \"pageSize\":10\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -879,7 +879,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8888/api/get-last-history",
+					"raw": "http://localhost:8888/api/profile/get-history",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -887,7 +887,8 @@
 					"port": "8888",
 					"path": [
 						"api",
-						"get-last-history"
+						"profile",
+						"get-history"
 					]
 				},
 				"description": "Lấy danh sách lịch sử làm bài thi của user"
@@ -897,10 +898,27 @@
 		{
 			"name": "Chat",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\": {\n        \"message\":\"\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8888/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chat"
+					]
 				}
 			},
 			"response": []
