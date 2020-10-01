@@ -4,10 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.actvn.onthionline.domain.User;
-import vn.actvn.onthionline.service.dto.ExamHistoryDto;
 import vn.actvn.onthionline.service.dto.UserProfileDto;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +19,6 @@ public class UserProfileMapper {
             return null;
         ModelMapper modelMapper = new ModelMapper();
         UserProfileDto userDto = modelMapper.map(user,UserProfileDto.class);
-        List<ExamHistoryDto> examHistoryDtos = user.getExamHistories().stream().map(examHistoryMapper::toDto).collect(Collectors.toList());
-        userDto.setExamHistories(examHistoryDtos);
         return userDto;
     }
 

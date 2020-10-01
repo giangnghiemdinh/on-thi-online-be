@@ -571,47 +571,6 @@
 			"response": []
 		},
 		{
-			"name": "Get Result ",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyBNYXN0ZXIiLCJleHAiOjE2MDEzNjY1NTMsImlhdCI6MTYwMTM0ODU1M30.f2k6pRUTj-LZtAO2fyQeWbdRG8lnvuEcYmjmjyod_0Er-X29sDy9kfYB3oRrgApW1sFlflGX_RhXMfIs_wpw8Q",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"body\": {\n        \"historyId\":1\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8888/api/profile/get-result",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8888",
-					"path": [
-						"api",
-						"profile",
-						"get-result"
-					]
-				},
-				"description": "Lấy kết quả theo id lịch sử (id lịch sử có thể lấy ở api get profile info haowjc get list exam by subject and grade)"
-			},
-			"response": []
-		},
-		{
 			"name": "Get All Exam",
 			"request": {
 				"auth": {
@@ -892,6 +851,57 @@
 					]
 				},
 				"description": "Lấy lịch sử cuối cùng làm bài thi của user"
+			},
+			"response": []
+		},
+		{
+			"name": "Get List History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJnaWFuZ25kNiIsImlwIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy4yNi41IiwiZnVsbG5hbWUiOiJOZ2hpw6ptIMSQw6xuaCBHaWFuZyIsImV4cCI6MTYwMTM4NDQwMiwiaWF0IjoxNjAxMzY2NDAyfQ.IkFpvGqiQQOfQVvTQpfx-Nogf7sHSllW4jZAx6D8d2o6XcRZ53pQZYhARkYr-OsF0ttOXZdSA1K-w_IOXALShQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\": {\n       \"examId\":3\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/get-last-history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"get-last-history"
+					]
+				},
+				"description": "Lấy danh sách lịch sử làm bài thi của user"
+			},
+			"response": []
+		},
+		{
+			"name": "Chat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		}

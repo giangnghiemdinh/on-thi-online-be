@@ -58,9 +58,6 @@ public class ExamService {
     private ExamAnswerMapper examAnswerMapper;
 
     @Autowired
-    private HistoryResultMapper historyResultMapper;
-
-    @Autowired
     private ExamHistoryMapper examHistoryMapper;
 
     @Transactional(rollbackFor = Throwable.class)
@@ -100,7 +97,7 @@ public class ExamService {
         }
     }
 
-    public GetExamBySubjectResponse getExamBySubject(GetExamBySubjectRequest request, String username) throws ServiceException {
+    public GetExamBySubjectResponse getExamBySubject(GetExamBySubjectRequest request) throws ServiceException {
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
             if (null == request.getSubject())
@@ -135,7 +132,7 @@ public class ExamService {
                 request.setPageNumber(0);
             if (request.getPageSize() < 1)
                 request.setPageSize(Constant.DEFAULT_PAGE_SIZE);
-            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getSearch());
+            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getInputSearch());
             Page<ExamDto> examDtos = exams.map(examMapper::toDto);
             GetAllExamResponse response = new GetAllExamResponse();
             response.setExamDtos(OptimizedPage.convert(examDtos));
@@ -243,31 +240,7 @@ public class ExamService {
             examRepository.saveAndFlush(exam.get());
 
             DoExamResponse response = new DoExamResponse();
-            response.setResult(historyResultMapper.toDto(savedHistory));
-            return response;
-        } catch (ServiceException e) {
-            throw e;
-        }
-    }
-
-    public GetResultResponse getResult(GetResultRequest request, String username) throws ServiceException {
-        try {
-            if (null == request) ServiceUtil.generateEmptyPayloadError();
-            if (null == request.getHistoryId())
-                throw ServiceExceptionBuilder.newBuilder()
-                        .addError(new ValidationErrorResponse("Id", ValidationError.NotNull))
-                        .build();
-
-            User user = userRepository.findByUsername(username);
-            Optional<ExamHistory> history = examHistoryRepository.findByIdAndUserId(request.getHistoryId(), user.getId());
-            if (!history.isPresent())
-                throw ServiceExceptionBuilder.newBuilder()
-                        .addError(new ValidationErrorResponse("Id", ValidationError.Invalid))
-                        .build();
-            LOGGER.info("Get result {}", history);
-            GetResultResponse response = new GetResultResponse();
-            response.setResult(historyResultMapper.toDto(history.get()));
-
+            response.setResult(examHistoryMapper.toDto(savedHistory));
             return response;
         } catch (ServiceException e) {
             throw e;
@@ -464,6 +437,26 @@ public class ExamService {
                 response.setLastHistory(null);
             else
                 response.setLastHistory(examHistoryMapper.toDto(examHistory.get()));
+
+            return response;
+        } catch (ServiceException e) {
+            throw e;
+        }
+    }
+
+    public GetListHistoryResponse getListHistory(GetListHistoryRequest request, String username) throws ServiceException {
+        try {
+            if (null == request)
+                ServiceUtil.generateEmptyPayloadError();
+            if (request.getPageNumber() < 0)
+                request.setPageNumber(0);
+            if (request.getPageSize() < 1)
+                request.setPageSize(Constant.DEFAULT_PAGE_SIZE);
+            User user = userRepository.findByUsername(username);
+            Page<ExamHistory> examHistories = examHistoryRepository.findAllByUserId(PageRequest.of(request.getPageNumber(), request.getPageSize()), user.getId());
+            Page<ExamHistoryDto> examHistoryDtos = examHistories.map(examHistoryMapper::toDto);
+            GetListHistoryResponse response = new GetListHistoryResponse();
+            response.setExamHistoryDtos(OptimizedPage.convert(examHistoryDtos));
 
             return response;
         } catch (ServiceException e) {

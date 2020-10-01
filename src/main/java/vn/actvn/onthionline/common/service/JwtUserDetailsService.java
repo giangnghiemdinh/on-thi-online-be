@@ -21,6 +21,7 @@ import vn.actvn.onthionline.repository.UserRepository;
 import vn.actvn.onthionline.service.dto.EmailDto;
 import vn.actvn.onthionline.service.mapper.UserRegisterMapper;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,7 +160,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-    public GetOTPResponse generateOtp(GetOTPRequest request, String purpose) throws ServiceException{
+    public GetOTPResponse generateOtp(GetOTPRequest request, String purpose) throws ServiceException, MessagingException {
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
             if (null == request.getUsername() && null == request.getEmail())
@@ -199,15 +200,59 @@ public class JwtUserDetailsService implements UserDetailsService {
 
                 // generate emailDTO object
                 EmailDto emailDTO = new EmailDto();
-                emailDTO.setSubject("Ôn thi online - Thi trắc nghiệm trực tuyến miễn phí 2020");
-                emailDTO.setBody("Chào bạn " + user.get().getFullname() + "! \n"+ "ĐỂ " + purpose + ", mã xác minh là "+ otpValue +
-                        ". Có hiệu lực trong 5 phút. KHÔNG chia sẻ mã này với người khác." +
-                        "\n\n\n\nDeal, \nÔn thi online team \nMade by KMA"
-                );
+                emailDTO.setSubject("WebOnThi - Thi trắc nghiệm trực tuyến miễn phí 2020");
+                emailDTO.setBody("<table align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"bgcolor=\"#f0f0f0\">\n" +
+                        "        <tr>\n" +
+                        "        <td style=\"padding: 30px 30px 20px 30px;\">\n" +
+                        "            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#ffffff\" style=\"max-width: 650px; margin: auto;\">\n" +
+                        "            <tr>\n" +
+                        "                <td colspan=\"2\" align=\"center\" style=\"background-color: #f3f8fd; padding: 40px;\">\n" +
+                        "                    <a href=\"http://webonthi.com/\" target=\"_blank\"><img src=\"https://hoctot.com/images/logo.png\" border=\"0\" /></a>\n" +
+                        "                </td>\n" +
+                        "            </tr>\n" +
+                        "            <tr>\n" +
+                        "                <td colspan=\"2\" align=\"center\" style=\"padding: 50px 50px 0px 50px;\">\n" +
+                        "                    <h1 style=\"padding-right: 0em; margin: 0; line-height: 40px; font-weight:300; font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif; color: #666; text-align: left; padding-bottom: 1em;\">\n" +
+                        "                        Email OTP\n" +
+                        "                    </h1>\n" +
+                        "                </td>\n" +
+                        "            </tr>\n" +
+                        "            <tr>\n" +
+                        "                <td style=\"text-align: left; padding: 0px 50px;\" valign=\"top\">\n" +
+                        "                    <p style=\"font-size: 18px; margin: 0; line-height: 24px; font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif; color: #666; text-align: left; padding-bottom: 3%;\">\n" +
+                        "                        Chào bạn " + user.get().getFullname() + ", \n" +
+                        "                    </p>\n" +
+                        "                    <p style=\"font-size: 18px; margin: 0; line-height: 24px; font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif; color: #666; text-align: left; padding-bottom: 3%;\">\n" +
+                        "                        ĐỂ " + purpose + ", mã xác minh là <span style=\"background-color: #F0F0F0; font-size: 20px; color: #3DA9F5\">" + otpValue + "</span>. Có hiệu lực trong 5 phút. KHÔNG chia sẻ mã này cho bất kì ai khác.\n" +
+                        "                    </p>\n" +
+                        "                </td>\n" +
+                        "            </tr>\n" +
+                        "            <tr>\n" +
+                        "                <td style=\"text-align: left; padding: 30px 50px 50px 50px\" valign=\"top\">\n" +
+                        "                    <p style=\"font-size: 18px; margin: 0; line-height: 24px; font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif; color: #505050; text-align: left;\">\n" +
+                        "                        Thanks,<br/>WebOnThi Team\n" +
+                        "                    </p>\n" +
+                        "                </td>\n" +
+                        "            </tr>\n" +
+                        "            <tr>\n" +
+                        "                <td colspan=\"2\" align=\"center\" style=\"padding: 20px 40px 40px 40px;\" bgcolor=\"#f0f0f0\">\n" +
+                        "                    <p style=\"font-size: 12px; margin: 0; line-height: 24px; font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif; color: #777;\">\n" +
+                        "                        &copy; 2020\n" +
+                        "                        <a href=\"http://webonthi.com/\" target=\"_blank\" style=\"color: #777; text-decoration: none\">Webonthi.com</a>\n" +
+                        "                        <br>\n" +
+                        "                        141 Chiến Thắng, Xã Tân Triều, H. Thanh Trì, Tp. Hà Nội.\n" +
+                        "                    </p>\n" +
+                        "                </td>\n" +
+                        "            </tr>\n" +
+                        "            </table>\n" +
+                        "        </td>\n" +
+                        "    </tr>\n" +
+                        "</table>");
                 emailDTO.setRecipients(recipients);
+                emailDTO.setIsHtml(true);
 
                 // send generated e-mail
-                emailService.sendSimpleMessage(emailDTO);
+                emailService.sendMessage(emailDTO);
                 return new GetOTPResponse(true);
             }
             else

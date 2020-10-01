@@ -1,5 +1,7 @@
 package vn.actvn.onthionline.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,5 +31,8 @@ public interface ExamHistoryRepository extends JpaRepository<ExamHistory, Intege
             "and o.id = (select min(a.id) from exam_history a where a.user_id = o.user_id and a.num_correct_ans = o.num_correct_ans) order by num_correct_ans desc limit 20",
             nativeQuery = true)
     List<ExamHistory> findListHigherCorrectAnswerInExam(@Param("id") Integer examId);
+
+    @Query(value = "from ExamHistory h where h.userCreated.id = :userId")
+    Page<ExamHistory> findAllByUserId(Pageable pageable, @Param("userId") Integer userId);
 
 }

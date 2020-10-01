@@ -24,5 +24,4 @@ public class UserProfileDto {
     private String school;
     private Integer onlineTime;
     private Date lastLogin;
-    private List<ExamHistoryDto> examHistories = new ArrayList<>();
 }

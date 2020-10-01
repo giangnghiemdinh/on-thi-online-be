@@ -62,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/change-password",
                         "/exam-by-subject",
                         "/ranking-by-exam",
-                        "/get-exam")
+                        "/get-exam",
+                        "/chat")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

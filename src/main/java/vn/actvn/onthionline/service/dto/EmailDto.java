@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Description(value = "EmailDTO DTO class.")
 public class EmailDto {
 
     private List<String> recipients;

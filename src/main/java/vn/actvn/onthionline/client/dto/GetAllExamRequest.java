@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class GetAllExamRequest {
     private Integer pageNumber;
     private Integer pageSize;
-    private String search;
+    private String inputSearch;
 }

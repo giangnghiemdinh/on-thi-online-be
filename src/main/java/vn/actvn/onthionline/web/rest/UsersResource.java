@@ -119,10 +119,10 @@ public class UsersResource {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/profile/get-result")
-    public ResponseEntity<BaseDataResponse<GetResultResponse>> getResult(@RequestBody BaseDataRequest<GetResultRequest> request,  Principal currentUser) {
+    @PostMapping("/profile/get-history")
+    public ResponseEntity<BaseDataResponse<GetListHistoryResponse>> getListHistory(@RequestBody BaseDataRequest<GetListHistoryRequest> request,  Principal currentUser) {
         try {
-            GetResultResponse response = examService.getResult(request.getBody(), currentUser.getName());
+            GetListHistoryResponse response = examService.getListHistory(request.getBody(), currentUser.getName());
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);
