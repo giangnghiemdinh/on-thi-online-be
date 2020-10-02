@@ -149,7 +149,7 @@ public class UsersResource {
     @PostMapping("/get-last-history")
     public ResponseEntity<BaseDataResponse<GetLastHistoryResponse>> getLastHistory(@RequestBody BaseDataRequest<GetLastHistoryRequest> request,  Principal currentUser) {
         try {
-            GetLastHistoryResponse response = examService.getLastHistory(request.getBody() ,currentUser.getName());
+            GetLastHistoryResponse response = examService.getLastHistory(request.getBody(), currentUser.getName());
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);

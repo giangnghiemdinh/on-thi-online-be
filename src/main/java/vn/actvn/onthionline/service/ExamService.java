@@ -87,6 +87,7 @@ public class ExamService {
                 question.setCreatedDate(new Date());
             });
             List<ExamQuestion> examQuestionsSaved = examQuestionRepository.saveAll(examQuestions);
+            LOGGER.info("Save list question {}", examQuestionsSaved);
 
             AddExamResponse response = new AddExamResponse();
             response.setExam(examMapper.toDtoWithQuestion(examSaved, examQuestionsSaved));
@@ -311,12 +312,14 @@ public class ExamService {
                 }
             });
             examQuestionRepository.saveAll(examQuestions);
+            LOGGER.info("Update list question {}", examQuestions);
 
             // Update exam
             Exam newExam = examMapper.toEntity(request.getExam());
             newExam.setNumPeopleDid(exam.get().getNumPeopleDid());
             newExam.setNumQuestion(request.getExam().getExamQuestions().size());
             newExam.setActive(exam.get().isActive());
+            newExam.setGrade(request.getExam().getGrade());
             newExam.setUserCreated(exam.get().getUserCreated());
             newExam.setCreatedDate(exam.get().getCreatedDate());
             newExam.setUpdatedDate(new Date());
@@ -358,6 +361,7 @@ public class ExamService {
                 rankingDto.setTotalQuestion(history.getExam().getNumQuestion());
                 rankingDtos.add(rankingDto);
             });
+            LOGGER.info("Get list rank {} by examid {}", rankingDtos, request.getExamId());
 
             GetRankingInExamResponse response = new GetRankingInExamResponse();
             response.setRanking(rankingDtos);
@@ -396,6 +400,8 @@ public class ExamService {
                 deleteExamDto.setError(null);
                 deleteExamDtos.add(deleteExamDto);
             }
+
+            LOGGER.info("Delete list exam", deleteExamDtos);
             DeleteExamResponse response = new DeleteExamResponse();
             response.setDeleteExamDtos(deleteExamDtos);
             return response;
@@ -416,6 +422,7 @@ public class ExamService {
             completedExamDtos.add(completedExamDto);
         });
 
+        LOGGER.info("Get completed exam", completedExamDtos);
         GetCompletedExamResponse response = new GetCompletedExamResponse();
         response.setCompletedExamDtos(completedExamDtos);
         return response;
@@ -457,6 +464,7 @@ public class ExamService {
             Page<ExamHistoryDto> examHistoryDtos = examHistories.map(examHistoryMapper::toDto);
             GetListHistoryResponse response = new GetListHistoryResponse();
             response.setExamHistoryDtos(OptimizedPage.convert(examHistoryDtos));
+            LOGGER.info("Get list history", examHistories);
 
             return response;
         } catch (ServiceException e) {

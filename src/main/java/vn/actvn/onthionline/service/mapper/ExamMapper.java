@@ -28,7 +28,7 @@ public class ExamMapper {
         examDto.setSubject(exam.getSubject());
         examDto.setGrade(exam.getGrade());
         examDto.setTime(exam.getTime());
-        if (exam.getExamHistory().size() > 0)
+        if (null != exam.getExamHistory() && exam.getExamHistory().size() > 0)
             examDto.setCanDelete(false);
         else
             examDto.setCanDelete(true);
@@ -50,7 +50,7 @@ public class ExamMapper {
         examDto.setGrade(exam.getGrade());
         examDto.setSubject(exam.getSubject());
         examDto.setTime(exam.getTime());
-        if (exam.getExamHistory().size() > 0)
+        if (null != exam.getExamHistory() && exam.getExamHistory().size() > 0)
             examDto.setCanDelete(false);
         else
             examDto.setCanDelete(true);
