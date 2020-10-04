@@ -25,6 +25,7 @@ public class ExamForUserMapper {
         examDto.setImage(exam.getImage());
         examDto.setName(exam.getName());
         examDto.setTime(exam.getTime());
+        examDto.setDescription(exam.getDescription());
         List<ExamQuestionForUserDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
         return examDto;
