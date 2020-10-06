@@ -11,4 +11,5 @@ public class ChangeForgotPassRequest {
     private String newPassword;
     private Integer otp;
     private String username;
+    private String email;
 }

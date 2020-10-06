@@ -271,6 +271,19 @@ public class JwtUserDetailsService implements UserDetailsService {
                 throw ServiceExceptionBuilder.newBuilder()
                         .addError(new ValidationErrorResponse("Otp", ValidationError.NotNull))
                         .build();
+            if (null == request.getUsername() && null == request.getEmail())
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("Username or email", ValidationError.NotNull))
+                        .build();
+            if (null != request.getUsername() && null != request.getEmail()) {
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("You must be use", "username or email"))
+                        .build();
+            }
+            if (null != request.getEmail()) {
+                Optional<User> user = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
+                if (user.isPresent()) request.setUsername(user.get().getUsername());
+            }
 
             if (true == otpService.validateOTP(request.getUsername() + Constant.FORGOT_PASSWORD, request.getOtp())) {
                 User user = userRepository.findByUsername(request.getUsername());
