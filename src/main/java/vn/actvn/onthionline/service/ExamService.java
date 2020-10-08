@@ -23,6 +23,7 @@ import vn.actvn.onthionline.repository.UserRepository;
 import vn.actvn.onthionline.service.dto.*;
 import vn.actvn.onthionline.service.mapper.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,9 @@ public class ExamService {
 
     @Autowired
     private ExamRepository examRepository;
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private ExamQuestionRepository examQuestionRepository;
@@ -167,7 +171,7 @@ public class ExamService {
         }
     }
 
-    public GetExamFromUserResponse getExamForUser(GetExamFromUserRequest request) throws ServiceException {
+    public GetExamFromUserResponse getExamForUser(GetExamFromUserRequest request, String username) throws ServiceException {
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
             if (null == request.getId())
@@ -177,13 +181,19 @@ public class ExamService {
 
             Optional<Exam> exam = examRepository.findExamActiveById(request.getId());
 
+            Integer numRework = 0;
+            if (null != username) {
+                User user = userRepository.findByUsername(username);
+                numRework = examHistoryRepository.countAllByExamIdAndUserId(request.getId(), user.getId());
+            }
+
             if (!exam.isPresent())
                 throw ServiceExceptionBuilder.newBuilder()
                         .addError(new ValidationErrorResponse("Id", ValidationError.Invalid))
                         .build();
             LOGGER.info("Get exam user {}", exam.get());
             GetExamFromUserResponse response = new GetExamFromUserResponse();
-            response.setExam(examForUserMapper.toDto(exam.get()));
+            response.setExam(examForUserMapper.toDto(exam.get(), numRework));
             return response;
         } catch (ServiceException e) {
             throw e;
@@ -360,6 +370,11 @@ public class ExamService {
                 rankingDto.setFullName(history.getUserCreated().getFullname());
                 rankingDto.setNumCorrectAns(history.getNumCorrectAns());
                 rankingDto.setTotalQuestion(history.getExam().getNumQuestion());
+                try {
+                    rankingDto.setAvatarBase64(imageService.getFile(history.getUserCreated().getAvatar()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 rankingDtos.add(rankingDto);
             });
             LOGGER.info("Get list rank {} by examid {}", rankingDtos, request.getExamId());

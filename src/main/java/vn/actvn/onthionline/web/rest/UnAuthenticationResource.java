@@ -118,9 +118,9 @@ public class UnAuthenticationResource {
     }
 
     @PostMapping("/get-exam")
-    public ResponseEntity<BaseDataResponse<GetExamFromUserResponse>> getExam(@RequestBody BaseDataRequest<GetExamFromUserRequest> request) {
+    public ResponseEntity<BaseDataResponse<GetExamFromUserResponse>> getExam(@RequestBody BaseDataRequest<GetExamFromUserRequest> request, Principal currentUser) {
         try {
-            GetExamFromUserResponse response = examService.getExamForUser(request.getBody());
+            GetExamFromUserResponse response = examService.getExamForUser(request.getBody(), currentUser != null ? currentUser.getName() : null);
             return ResponseUtil.wrap(response);
         } catch (ServiceException e) {
             LOGGER.error(this.getClass().getName(), e);

@@ -14,6 +14,7 @@ public class ExamForUserDto {
     private String name;
     private String image;
     private Integer numPeopleDid;
+    private Integer numRework;
     private Integer time;
     private String description;
     private List<ExamQuestionForUserDto> examQuestions;

@@ -16,7 +16,7 @@ public class ExamForUserMapper {
     @Autowired
     private ExamQuestionForUserMapper examQuestionMapper;
 
-    public ExamForUserDto toDto(Exam exam) {
+    public ExamForUserDto toDto(Exam exam, Integer numRework) {
         if (exam == null)
             return null;
 
@@ -26,6 +26,7 @@ public class ExamForUserMapper {
         examDto.setName(exam.getName());
         examDto.setTime(exam.getTime());
         examDto.setNumPeopleDid(exam.getNumPeopleDid());
+        examDto.setNumRework(numRework);
         examDto.setDescription(exam.getDescription());
         List<ExamQuestionForUserDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
         examDto.setExamQuestions(examQuestionDtos);
