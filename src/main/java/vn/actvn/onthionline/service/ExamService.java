@@ -76,6 +76,7 @@ public class ExamService {
             exam.setActive(false);
             exam.setUserCreated(username);
             exam.setCreatedDate(new Date());
+            exam.setUpdatedDate(new Date());
             Exam examSaved = examRepository.save(exam);
             LOGGER.info("Save exam {}", examSaved);
 
@@ -180,7 +181,7 @@ public class ExamService {
                 throw ServiceExceptionBuilder.newBuilder()
                         .addError(new ValidationErrorResponse("Id", ValidationError.Invalid))
                         .build();
-            LOGGER.info("Get exam user {}", exam);
+            LOGGER.info("Get exam user {}", exam.get());
             GetExamFromUserResponse response = new GetExamFromUserResponse();
             response.setExam(examForUserMapper.toDto(exam.get()));
             return response;
@@ -214,7 +215,7 @@ public class ExamService {
             //Check correct answer
             Integer numOfCorrect = 0;
             for (ExamAnswerDto answer : request.getExamAnswer()) {
-                Optional<ExamQuestion> question = examQuestionRepository.findById(answer.getQuestionId());
+                Optional<ExamQuestion> question = examQuestionRepository.findByIdAndExamId(answer.getQuestionId(), exam.get().getId());
                 if (!question.isPresent()) continue;
                 if (question.get().getCorrectAnswer().equalsIgnoreCase(answer.getAnswer())) numOfCorrect++;
             }

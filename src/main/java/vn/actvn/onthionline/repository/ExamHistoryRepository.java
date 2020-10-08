@@ -26,9 +26,10 @@ public interface ExamHistoryRepository extends JpaRepository<ExamHistory, Intege
     @Query(value = "from ExamHistory h where h.id = (select max(h.id) from ExamHistory h where h.exam.id = :examId and h.userCreated.id = :userId)")
     Optional<ExamHistory> findLastHistory(@Param("examId") Integer examId, @Param("userId") Integer userId);
 
-    @Query(value = "select * from exam_history o where o.exam_id = :id \n" +
-            "and o.num_correct_ans = (select max(b.num_correct_ans) from exam_history b where b.user_id = o.user_id )\n" +
-            "and o.id = (select min(a.id) from exam_history a where a.user_id = o.user_id and a.num_correct_ans = o.num_correct_ans) order by num_correct_ans desc limit 20",
+    @Query(value = "select * from exam_history o where o.exam_id = :id\n" +
+            "and o.num_correct_ans = (select max(b.num_correct_ans) from exam_history b where b.user_id = o.user_id and b.exam_id = o.exam_id)\n" +
+            "and o.id = (select min(a.id) from exam_history a where a.user_id = o.user_id and a.num_correct_ans = o.num_correct_ans and a.exam_id = o.exam_id) \n" +
+            "order by num_correct_ans desc limit 20",
             nativeQuery = true)
     List<ExamHistory> findListHigherCorrectAnswerInExam(@Param("id") Integer examId);
 
