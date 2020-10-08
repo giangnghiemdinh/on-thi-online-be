@@ -371,7 +371,8 @@ public class ExamService {
                 rankingDto.setNumCorrectAns(history.getNumCorrectAns());
                 rankingDto.setTotalQuestion(history.getExam().getNumQuestion());
                 try {
-                    rankingDto.setAvatarBase64(imageService.getFile(history.getUserCreated().getAvatar()));
+                    if (null != history.getUserCreated().getAvatar())
+                        rankingDto.setAvatarBase64(imageService.getFile(history.getUserCreated().getAvatar()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
