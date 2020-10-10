@@ -4,6 +4,7 @@ vn/actvn/onthionline/client/dto/RegisterResponse.class
 vn/actvn/onthionline/client/dto/ChatMessageRequest.class
 vn/actvn/onthionline/service/mapper/UserProfileMapper.class
 vn/actvn/onthionline/service/mapper/ExamHistoryMapper.class
+vn/actvn/onthionline/domain/Chat.class
 vn/actvn/onthionline/client/dto/DoExamResponse.class
 vn/actvn/onthionline/common/utils/OptimizedPage.class
 vn/actvn/onthionline/common/service/EmailService.class
@@ -19,7 +20,6 @@ vn/actvn/onthionline/client/dto/GetExamFromUserResponse.class
 vn/actvn/onthionline/repository/ExamRepository.class
 vn/actvn/onthionline/client/dto/GetExamResponse.class
 vn/actvn/onthionline/client/dto/ChangeActiveExamRequest.class
-vn/actvn/onthionline/repository/converter/OldExamHistoryConverter.class
 vn/actvn/onthionline/client/dto/GetProfileInfoResponse.class
 vn/actvn/onthionline/client/dto/UpdateProfileInfoRequest.class
 vn/actvn/onthionline/service/dto/UserDto.class
@@ -43,9 +43,11 @@ vn/actvn/onthionline/client/dto/UpdateExamResponse.class
 vn/actvn/onthionline/service/dto/RankingDto.class
 vn/actvn/onthionline/domain/ExamQuestion.class
 vn/actvn/onthionline/client/dto/GetRankingInExamRequest.class
+vn/actvn/onthionline/repository/converter/ChatResponseConverter.class
 vn/actvn/onthionline/service/dto/DeleteExamDto.class
 vn/actvn/onthionline/common/exception/ServiceException.class
 vn/actvn/onthionline/client/dto/GetCompletedExamResponse.class
+vn/actvn/onthionline/domain/ChatResponse.class
 vn/actvn/onthionline/client/dto/LogoutResponse.class
 vn/actvn/onthionline/service/dto/ExamQuestionForUserDto.class
 vn/actvn/onthionline/common/service/OtpGenerator$1.class
@@ -88,6 +90,7 @@ vn/actvn/onthionline/repository/converter/ExamAnswerConverter.class
 vn/actvn/onthionline/client/dto/BaseDataResponse.class
 vn/actvn/onthionline/repository/UserRepository.class
 vn/actvn/onthionline/common/service/JwtRequestFilter.class
+vn/actvn/onthionline/repository/converter/ChatMessageConverter.class
 vn/actvn/onthionline/client/dto/UploadImgProfileResponse.class
 vn/actvn/onthionline/common/service/OtpService.class
 vn/actvn/onthionline/service/mapper/ExamQuestionResultMapper.class
@@ -112,6 +115,7 @@ vn/actvn/onthionline/service/dto/ExamQuestionResultDto.class
 vn/actvn/onthionline/config/MailConfig.class
 vn/actvn/onthionline/common/exception/KeyValue.class
 vn/actvn/onthionline/client/dto/AddExamResponse.class
+vn/actvn/onthionline/domain/ChatMessage.class
 vn/actvn/onthionline/repository/CommentRepository.class
 vn/actvn/onthionline/client/dto/LoginResponse.class
 vn/actvn/onthionline/client/dto/DoExamRequest.class

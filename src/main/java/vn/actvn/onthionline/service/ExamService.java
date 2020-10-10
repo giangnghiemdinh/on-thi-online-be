@@ -248,8 +248,10 @@ public class ExamService {
             LOGGER.info("New history {}", newExamHistory);
 
             //Update exam
-            exam.get().setNumPeopleDid(exam.get().getNumPeopleDid()+1);
-            examRepository.saveAndFlush(exam.get());
+            if (countHistory == 0) {
+                exam.get().setNumPeopleDid(exam.get().getNumPeopleDid()+1);
+                examRepository.saveAndFlush(exam.get());
+            }
 
             DoExamResponse response = new DoExamResponse();
             response.setResult(examHistoryMapper.toDto(savedHistory));

@@ -26,6 +26,7 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/repository/converter/ExamAnswerConverter.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/mapper/ExamForUserMapper.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/UpdateProfileInfoRequest.java
+/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/repository/converter/ChatMessageConverter.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/CommentService.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/mapper/ExamHistoryMapper.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/BaseDataResponse.java
@@ -35,12 +36,14 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/common/service/OtpService.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/ChangeForgotPassRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/common/service/JwtTokenService.java
+/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/domain/Chat.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetLastHistoryRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/domain/ExamQuestion.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/ChangePasswordRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/ImageService.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetExamResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/UpdateProfileInfoResponse.java
+/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/domain/ChatMessage.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/AddUserResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetLastHistoryResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetExamFromUserResponse.java
@@ -80,6 +83,7 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetImgProfileResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/common/utils/OptimizedPage.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/UserService.java
+/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/domain/ChatResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/common/service/JwtRequestFilter.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetAllExamRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/DeleteExamRequest.java
@@ -99,7 +103,6 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetExamBySubjectResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/AddExamResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/UploadImgProfileRequest.java
-/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/repository/converter/OldExamHistoryConverter.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/dto/DeleteExamDto.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetExamFromUserRequest.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/DoExamRequest.java
@@ -113,4 +116,5 @@
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/service/dto/ExamQuestionDto.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/GetListHistoryResponse.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/DeleteExamResponse.java
+/Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/repository/converter/ChatResponseConverter.java
 /Volumes/Working/My Project/onthionline/src/main/java/vn/actvn/onthionline/client/dto/RegisterResponse.java
