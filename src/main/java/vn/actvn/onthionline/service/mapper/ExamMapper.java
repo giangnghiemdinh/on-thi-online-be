@@ -1,12 +1,10 @@
 package vn.actvn.onthionline.service.mapper;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.actvn.onthionline.domain.Exam;
-import vn.actvn.onthionline.domain.ExamQuestion;
 import vn.actvn.onthionline.service.dto.ExamDto;
-import vn.actvn.onthionline.service.dto.ExamQuestionDto;
+import vn.actvn.onthionline.service.dto.QuestionDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class ExamMapper {
     @Autowired
-    private ExamQuestionMapper examQuestionMapper;
+    private QuestionMapper questionMapper;
 
     public ExamDto toDto(Exam exam) {
         if (exam == null)
@@ -22,41 +20,20 @@ public class ExamMapper {
 
         ExamDto examDto = new ExamDto();
         examDto.setId(exam.getId());
-        examDto.setImage(exam.getImage());
         examDto.setName(exam.getName());
         examDto.setDescription(exam.getDescription());
         examDto.setSubject(exam.getSubject());
         examDto.setGrade(exam.getGrade());
+        examDto.setNumQuestion(exam.getNumQuestion());
         examDto.setTime(exam.getTime());
         if (null != exam.getExamHistory() && exam.getExamHistory().size() > 0)
             examDto.setCanDelete(false);
         else
             examDto.setCanDelete(true);
         examDto.setIsActive(exam.isActive());
-        List<ExamQuestionDto> examQuestionDtos = exam.getExamQuestions().stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
-        examDto.setExamQuestions(examQuestionDtos);
-        return examDto;
-    }
-
-    public ExamDto toDtoWithQuestion(Exam exam, List<ExamQuestion> examQuestions) {
-        if (exam == null)
-            return null;
-
-        ExamDto examDto = new ExamDto();
-        examDto.setId(exam.getId());
-        examDto.setImage(exam.getImage());
-        examDto.setName(exam.getName());
-        examDto.setDescription(exam.getDescription());
-        examDto.setGrade(exam.getGrade());
-        examDto.setSubject(exam.getSubject());
-        examDto.setTime(exam.getTime());
-        if (null != exam.getExamHistory() && exam.getExamHistory().size() > 0)
-            examDto.setCanDelete(false);
-        else
-            examDto.setCanDelete(true);
-        examDto.setIsActive(exam.isActive());
-        List<ExamQuestionDto> examQuestionDtos = examQuestions.stream().map(examQuestionMapper::toDto).collect(Collectors.toList());
-        examDto.setExamQuestions(examQuestionDtos);
+        examDto.setMixedQuestion(exam.getMixedQuestion());
+        List<QuestionDto> questionDtos = exam.getQuestions().stream().map(questionMapper::toDto).collect(Collectors.toList());
+        examDto.setExamQuestions(questionDtos);
         return examDto;
     }
 
@@ -66,12 +43,12 @@ public class ExamMapper {
 
         Exam exam = new Exam();
         exam.setId(examDto.getId());
-        exam.setImage(examDto.getImage());
         exam.setName(examDto.getName());
         exam.setDescription(examDto.getDescription());
         exam.setSubject(examDto.getSubject());
         exam.setTime(examDto.getTime());
         exam.setGrade(examDto.getGrade());
+        exam.setMixedQuestion(examDto.getMixedQuestion());
         return exam;
     }
 }

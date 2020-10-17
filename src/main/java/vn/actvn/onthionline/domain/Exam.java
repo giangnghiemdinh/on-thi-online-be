@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +23,6 @@ public class Exam implements Serializable {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "image")
-    private String image;
 
     @Column(name = "grade")
     private String grade;      // Cấp
@@ -51,6 +45,9 @@ public class Exam implements Serializable {
     @Column(name = "time")
     private Integer time;   // Thời gian làm bài
 
+    @Column(name = "mixed_question")
+    private Boolean mixedQuestion;
+
     @Column(name = "user_created")
     private String userCreated;
 
@@ -62,19 +59,60 @@ public class Exam implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    @OneToMany(mappedBy = "exam")
-    private List<ExamQuestion> examQuestions = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "exam_question",
+            joinColumns = @JoinColumn(name = "exam_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
+    private List<Question> questions = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "exam")
-    private List<ExamHistory> examHistory;
+    private Set<ExamHistory> examHistory = new HashSet<>();;
 
     @OneToMany(mappedBy = "exam")
-    private List<Comment> comments = new ArrayList<>();
+    private Set<Comment> comments = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Exam)) return false;
+        Exam exam = (Exam) o;
+        return isActive() == exam.isActive() &&
+                Objects.equals(getId(), exam.getId()) &&
+                Objects.equals(getName(), exam.getName()) &&
+                Objects.equals(getGrade(), exam.getGrade()) &&
+                Objects.equals(getSubject(), exam.getSubject()) &&
+                Objects.equals(getNumQuestion(), exam.getNumQuestion()) &&
+                Objects.equals(getNumPeopleDid(), exam.getNumPeopleDid()) &&
+                Objects.equals(getDescription(), exam.getDescription()) &&
+                Objects.equals(getTime(), exam.getTime()) &&
+                Objects.equals(getMixedQuestion(), exam.getMixedQuestion()) &&
+                Objects.equals(getUserCreated(), exam.getUserCreated()) &&
+                Objects.equals(getCreatedDate(), exam.getCreatedDate()) &&
+                Objects.equals(getUpdatedDate(), exam.getUpdatedDate());
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, image, subject, numQuestion, numPeopleDid, description, isActive, time, userCreated, createdDate, updatedDate, examHistory, examQuestions, comments);
+        return Objects.hash(getId(), getName(), getGrade(), getSubject(), getNumQuestion(), getNumPeopleDid(), getDescription(), isActive(), getTime(), getMixedQuestion(), getUserCreated(), getCreatedDate(), getUpdatedDate());
     }
 
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", grade='" + grade + '\'' +
+                ", subject='" + subject + '\'' +
+                ", numQuestion=" + numQuestion +
+                ", numPeopleDid=" + numPeopleDid +
+                ", description='" + description + '\'' +
+                ", isActive=" + isActive +
+                ", time=" + time +
+                ", mixedQuestion=" + mixedQuestion +
+                ", userCreated='" + userCreated + '\'' +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                '}';
+    }
 }

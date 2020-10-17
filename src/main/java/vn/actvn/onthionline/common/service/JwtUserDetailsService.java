@@ -23,10 +23,7 @@ import vn.actvn.onthionline.service.mapper.UserRegisterMapper;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -141,7 +138,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             newUser.setCreatedDate(new Date());
             newUser.setIsActive(true);
             newUser.setOnlineTime(0);
-            List<Role> roleList = new ArrayList<>();
+            Set<Role> roleList = new HashSet<>();
             roleList.add(roleRepository.findByRoleName(Constant.ROLE_USER));
             newUser.setRoles(roleList);
 

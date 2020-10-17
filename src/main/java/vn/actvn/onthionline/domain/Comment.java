@@ -27,8 +27,8 @@ public class Comment implements Serializable {
     @Column(name = "parent_id")
     private String parentId;
 
-    @Column(name = "is_like")
-    private Boolean isLike;
+    @Column(name = "users_liked")
+    private String userLiked;
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,19 +47,32 @@ public class Comment implements Serializable {
     private Exam exam;
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(getId(), comment.getId()) &&
+                Objects.equals(getContent(), comment.getContent()) &&
+                Objects.equals(getParentId(), comment.getParentId()) &&
+                Objects.equals(getUserLiked(), comment.getUserLiked()) &&
+                Objects.equals(getCreatedDate(), comment.getCreatedDate()) &&
+                Objects.equals(getUpdatedDate(), comment.getUpdatedDate());
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(id, content, parentId, createdDate, isLike, updatedDate, userCreated, exam);
+        return Objects.hash(getId(), getContent(), getParentId(), getUserLiked(), getCreatedDate(), getUpdatedDate());
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", content='" + content + '\'' +
                 ", parentId='" + parentId + '\'' +
-                ", isLike='" + isLike + '\'' +
-                ", createdDate='" + createdDate + '\'' +
-                ", updatedDate='" + updatedDate + '\'' +
+                ", userLiked='" + userLiked + '\'' +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
                 '}';
     }
 }

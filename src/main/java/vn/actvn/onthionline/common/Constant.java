@@ -22,4 +22,11 @@ public @interface Constant {
     String DO_EXAM = " (Thi lại lần ";
     String IMAGES_DIR_DEFAULT = "src/main/resources/images";
     Integer DEFAULT_PAGE_SIZE = 50;
+    String HIGH_SCHOOL = "LUYỆN THI VÀO LỚP 10";
+    String COLLEGE = "LUYỆN THI THPT QUỐC GIA";
+    Double MIN_RANK_CONSTANT = 0.75;
+    String TYPE_ONE = "one";
+    String TYPE_MULTI = "multi";
+    String WRITE = "write";
+    String SEPARATOR = "&&";
 }

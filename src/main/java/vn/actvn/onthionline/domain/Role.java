@@ -10,10 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Data
@@ -41,7 +38,7 @@ public class Role implements Serializable, GrantedAuthority {
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     @Transient
     @JsonIgnore
@@ -56,12 +53,24 @@ public class Role implements Serializable, GrantedAuthority {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return Objects.equals(getId(), role.getId()) &&
+                Objects.equals(getRoleName(), role.getRoleName()) &&
+                Objects.equals(getDescription(), role.getDescription()) &&
+                Objects.equals(getCreatedDate(), role.getCreatedDate()) &&
+                Objects.equals(getUsers(), role.getUsers());
+    }
+
+    @Override
     public String toString() {
         return "Role{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", roleName='" + roleName + '\'' +
-                ", description='" + roleName + '\'' +
-                ", createdDate='" + createdDate + '\'' +
+                ", description='" + description + '\'' +
+                ", createdDate=" + createdDate +
                 '}';
     }
 }

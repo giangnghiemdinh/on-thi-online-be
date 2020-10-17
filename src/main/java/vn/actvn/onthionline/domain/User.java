@@ -79,13 +79,13 @@ public class User implements Serializable, UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "userCreated")
-    private List<ExamHistory> examHistories = new ArrayList<>();
+    private Set<ExamHistory> examHistories = new HashSet<>();
 
     @OneToMany(mappedBy = "userCreated")
-    private List<Comment> comments = new ArrayList<>();
+    private Set<Comment> comments = new HashSet<>();
 
     @Transient
     @JsonIgnore
@@ -135,24 +135,50 @@ public class User implements Serializable, UserDetails {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getFullname(), user.getFullname()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPhone(), user.getPhone()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getAvatar(), user.getAvatar()) &&
+                Objects.equals(getBirthday(), user.getBirthday()) &&
+                Objects.equals(getGender(), user.getGender()) &&
+                Objects.equals(getCity(), user.getCity()) &&
+                Objects.equals(getClazz(), user.getClazz()) &&
+                Objects.equals(getSchool(), user.getSchool()) &&
+                Objects.equals(getOnlineTime(), user.getOnlineTime()) &&
+                Objects.equals(getIsActive(), user.getIsActive()) &&
+                Objects.equals(getCreatedDate(), user.getCreatedDate()) &&
+                Objects.equals(getLastLogin(), user.getLastLogin()) &&
+                Objects.equals(getRoles(), user.getRoles()) &&
+                Objects.equals(getExamHistories(), user.getExamHistories()) &&
+                Objects.equals(getComments(), user.getComments());
+    }
+
+    @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", fullname='" + fullname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", birthday='" + birthday + '\'' +
+                ", birthday=" + birthday +
                 ", gender='" + gender + '\'' +
                 ", city='" + city + '\'' +
                 ", clazz='" + clazz + '\'' +
                 ", school='" + school + '\'' +
-                ", isActive='" + isActive + '\'' +
-                ", onlineTime='" + onlineTime + '\'' +
-                ", createdDate='" + createdDate + '\'' +
-                ", lastLogin='" + lastLogin + '\'' +
+                ", onlineTime=" + onlineTime +
+                ", isActive=" + isActive +
+                ", createdDate=" + createdDate +
+                ", lastLogin=" + lastLogin +
                 '}';
     }
 }

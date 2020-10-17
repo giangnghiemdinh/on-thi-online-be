@@ -13,7 +13,6 @@ import vn.actvn.onthionline.common.*;
 import vn.actvn.onthionline.common.exception.ServiceException;
 import vn.actvn.onthionline.common.service.JwtUserDetailsService;
 import vn.actvn.onthionline.common.utils.ResponseUtil;
-import vn.actvn.onthionline.service.ChatService;
 import vn.actvn.onthionline.service.ExamService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +29,6 @@ public class UnAuthenticationResource {
     @Autowired
     private ExamService examService;
 
-    @Autowired
-    private ChatService chatService;
 
     @PostMapping(value = "/auth/token")
     public ResponseEntity<BaseDataResponse<LoginResponse>> createAuthenticationToken(@RequestBody BaseDataRequest<LoginRequest> request, HttpServletRequest httpRequest) throws ServiceException {
@@ -145,17 +142,4 @@ public class UnAuthenticationResource {
         }
     }
 
-    @PostMapping("/chat")
-    public ResponseEntity<BaseDataResponse<ChatMessageResponse>> chat(@RequestBody BaseDataRequest<ChatMessageRequest> request, Principal currentUser) {
-        try {
-            ChatMessageResponse response = chatService.chat(request.getBody(), currentUser != null ? currentUser.getName() : null);
-            return ResponseUtil.wrap(response);
-        } catch (ServiceException e) {
-            LOGGER.error(this.getClass().getName(), e);
-            return ResponseUtil.generateErrorResponse(e);
-        } catch (Exception e) {
-            LOGGER.error(this.getClass().getName(), e);
-            return ResponseUtil.generateErrorResponse(e);
-        }
-    }
 }

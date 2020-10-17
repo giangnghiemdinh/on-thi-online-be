@@ -12,10 +12,9 @@ import java.util.List;
 public class ExamForUserDto {
     private Integer id;
     private String name;
-    private String image;
     private Integer numPeopleDid;
     private Integer numRework;
     private Integer time;
     private String description;
-    private List<ExamQuestionForUserDto> examQuestions;
+    private List<QuestionForUserDto> examQuestions;
 }

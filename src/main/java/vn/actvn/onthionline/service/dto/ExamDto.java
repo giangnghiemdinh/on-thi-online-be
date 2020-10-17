@@ -12,12 +12,13 @@ import java.util.List;
 public class ExamDto {
     private Integer id;
     private String name;
-    private String image;
     private String subject;
     private String grade;
     private String description;
+    private Boolean mixedQuestion;
+    private Integer numQuestion;
     private Integer time;
     private Boolean isActive;
     private Boolean canDelete;
-    private List<ExamQuestionDto> examQuestions;
+    private List<QuestionDto> examQuestions;
 }

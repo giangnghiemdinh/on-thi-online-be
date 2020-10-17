@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class ExamInfoDto {
     private Integer id;
     private String name;
-    private String image;
     private String subject;
     private String grade;
     private String description;
