@@ -21,7 +21,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>  {
                     "and (:mode is null or q.mode like %:mode%) \n" +
                     "and (:subject is null or q.subject like %:subject%) \n" +
                     "and (:grade is null or q.grade like %:grade%) \n" +
-                    "and (:type is null or q.type like %:type%) order by q.updatedDate desc")
+                    "and (:type is null or q.type like %:type%) \n" +
+                    "and q.subject not like 'van' order by q.updatedDate desc")
     Page<Question> findAllQuestion(Pageable pageable,
                                    @Param("question") String question,
                                    @Param("mode") String mode,
