@@ -8,6 +8,7 @@ import vn.actvn.onthionline.service.ImageService;
 import vn.actvn.onthionline.service.dto.CommentDto;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ public class CommentMapper {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setContent(comment.getContent());
+        commentDto.setParentId(comment.getParentId());
+        commentDto.setReplyComment(new ArrayList<>());
         //commentDto.setUserLiked(getUserLikedToList(comment.getUserLiked()));
         //Check isLiked;
         commentDto.setCreatedDate(comment.getCreatedDate());

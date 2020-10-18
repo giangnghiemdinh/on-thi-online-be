@@ -13,7 +13,7 @@ import java.util.List;
 public class CommentDto {
     private Integer id;
     private String content;
-    private String parentId;
+    private Integer parentId;
     private boolean isLike;
     private List<String> userLiked;
     private Date createdDate;
