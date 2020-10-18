@@ -11,4 +11,6 @@ public class GetAllExamRequest {
     private Integer pageNumber;
     private Integer pageSize;
     private String inputSearch;
+    private String grade;
+    private String subject;
 }

@@ -205,7 +205,7 @@ public class ExamService {
                 request.setPageNumber(0);
             if (request.getPageSize() < 1)
                 request.setPageSize(Constant.DEFAULT_PAGE_SIZE);
-            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getInputSearch());
+            Page<Exam> exams = examRepository.findAllExam(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getInputSearch(), request.getSubject(), request.getGrade());
             Page<ExamDto> examDtos = exams.map(examMapper::toDto);
             GetAllExamResponse response = new GetAllExamResponse();
             response.setExamDtos(OptimizedPage.convert(examDtos));
