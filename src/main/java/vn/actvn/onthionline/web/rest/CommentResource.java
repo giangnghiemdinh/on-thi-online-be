@@ -28,7 +28,6 @@ public class CommentResource {
     @MessageMapping("exam/{id}/initComment")
     @SendTo("/exam/{id}")
     public List<CommentDto> initComment(@DestinationVariable String id, @Payload GetAllCommentDto getAllCommentDto) {
-        LOGGER.info("O examId {} voi request {}",id, getAllCommentDto);
         return commentService.getAll(getAllCommentDto);
     }
 

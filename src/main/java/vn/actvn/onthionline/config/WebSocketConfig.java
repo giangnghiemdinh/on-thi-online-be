@@ -15,7 +15,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/comment").withSockJS();
+        registry.addEndpoint("/comment")// ws connection url
+                .setAllowedOrigins("*").withSockJS();
     }
 
     @Override

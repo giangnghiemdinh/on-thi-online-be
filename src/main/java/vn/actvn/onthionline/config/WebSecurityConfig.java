@@ -48,26 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                .csrf().disable()
-//                .cors().configurationSource(corsConfigurationSource()).and()
-//                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers(
-//                        "/auth/token",
-//                        "/register",
-//                        "/forgot-password",
-//                        "/generate-otp",
-//                        "/change-password",
-//                        "/exam-by-subject",
-//                        "/ranking-by-exam",
-//                        "/get-exam",
-//                        "/chat")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//        ;
         httpSecurity
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
@@ -83,10 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/exam-by-subject",
                         "/ranking-by-exam",
                         "/get-exam",
-                        "/chat")
+                        "/comment/**")
                 .permitAll()
                 .anyRequest()
-                .permitAll()
+                .authenticated()
         ;
 
         httpSecurity.addFilterBefore(jwtRequestFilter
