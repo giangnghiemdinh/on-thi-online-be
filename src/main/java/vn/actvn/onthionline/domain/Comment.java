@@ -25,7 +25,7 @@ public class Comment implements Serializable {
     private String content;
 
     @Column(name = "parent_id")
-    private String parentId;
+    private Integer parentId;
 
     @Column(name = "users_liked")
     private String userLiked;
@@ -69,7 +69,7 @@ public class Comment implements Serializable {
         return "Comment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", parentId='" + parentId + '\'' +
+                ", parentId=" + parentId +
                 ", userLiked='" + userLiked + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
