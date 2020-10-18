@@ -13,4 +13,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Query(value = "from Comment c where c.exam.id = :examId")
     List<Comment> findAllByExamId(@Param("examId") Integer examId);
+
+    void deleteAllByExamId(Integer examId);
 }

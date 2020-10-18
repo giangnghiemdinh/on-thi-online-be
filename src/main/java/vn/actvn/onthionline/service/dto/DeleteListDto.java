@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteExamDto {
+public class DeleteListDto {
     private Integer id;
     private boolean success;
     private String error;

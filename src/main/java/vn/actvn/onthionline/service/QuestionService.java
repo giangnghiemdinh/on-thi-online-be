@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vn.actvn.onthionline.client.dto.*;
 import vn.actvn.onthionline.common.Constant;
 import vn.actvn.onthionline.common.ValidationError;
@@ -18,9 +19,11 @@ import vn.actvn.onthionline.domain.Exam;
 import vn.actvn.onthionline.domain.Question;
 import vn.actvn.onthionline.repository.ExamRepository;
 import vn.actvn.onthionline.repository.QuestionRepository;
+import vn.actvn.onthionline.service.dto.DeleteListDto;
 import vn.actvn.onthionline.service.dto.QuestionDto;
 import vn.actvn.onthionline.service.mapper.QuestionMapper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +78,42 @@ public class QuestionService {
             SaveQuestionResponse response = new SaveQuestionResponse();
             response.setQuestion(questionMapper.toDto(savedQuestion.get()));
             return response;
+        } catch (ServiceException e) {
+            throw e;
+        }
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public DeleteQuestionResponse delete(DeleteQuestionRequest request) throws ServiceException{
+        try {
+            if (null == request) ServiceUtil.generateEmptyPayloadError();
+            if (null == request.getQuestionIds() || request.getQuestionIds().size() == 0)
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("Question", ValidationError.NotNull))
+                        .build();
+
+            List<DeleteListDto> deleteListDtos = new ArrayList<>();
+            for (Integer id : request.getQuestionIds()) {
+                DeleteListDto deleteQuestionDto = new DeleteListDto();
+                deleteQuestionDto.setId(id);
+                Optional<Question> question = questionRepository.findById(id);
+                if (!question.isPresent()) {
+                    deleteQuestionDto.setSuccess(false);
+                    deleteQuestionDto.setError("Question Id invalid");
+                    deleteListDtos.add(deleteQuestionDto);
+                    continue;
+                }
+                question.get().getExams().forEach(exam -> {
+                    exam.setNumQuestion(exam.getNumQuestion() - 1);
+                    exam.getQuestions().remove(question.get());
+                    examRepository.saveAndFlush(exam);
+                });
+                questionRepository.delete(question.get());
+                deleteQuestionDto.setSuccess(true);
+                deleteQuestionDto.setError(null);
+                deleteListDtos.add(deleteQuestionDto);
+            }
+            return new DeleteQuestionResponse(deleteListDtos);
         } catch (ServiceException e) {
             throw e;
         }

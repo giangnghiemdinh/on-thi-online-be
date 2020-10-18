@@ -81,4 +81,19 @@ public class QuestionResource {
             return ResponseUtil.generateErrorResponse(e);
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/delete")
+    public ResponseEntity<BaseDataResponse<DeleteQuestionResponse>> deleteQuestion(@RequestBody BaseDataRequest<DeleteQuestionRequest> request) {
+        try {
+            DeleteQuestionResponse response = questionService.delete(request.getBody());
+            return ResponseUtil.wrap(response);
+        } catch (ServiceException e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        } catch (Exception e) {
+            LOGGER.error(this.getClass().getName(), e);
+            return ResponseUtil.generateErrorResponse(e);
+        }
+    }
 }

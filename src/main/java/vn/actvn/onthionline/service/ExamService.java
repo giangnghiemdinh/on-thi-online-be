@@ -17,10 +17,7 @@ import vn.actvn.onthionline.common.service.EmailService;
 import vn.actvn.onthionline.common.utils.OptimizedPage;
 import vn.actvn.onthionline.common.utils.ServiceUtil;
 import vn.actvn.onthionline.domain.*;
-import vn.actvn.onthionline.repository.ExamHistoryRepository;
-import vn.actvn.onthionline.repository.QuestionRepository;
-import vn.actvn.onthionline.repository.ExamRepository;
-import vn.actvn.onthionline.repository.UserRepository;
+import vn.actvn.onthionline.repository.*;
 import vn.actvn.onthionline.service.dto.*;
 import vn.actvn.onthionline.service.mapper.*;
 
@@ -52,7 +49,7 @@ public class ExamService {
     private ExamMapper examMapper;
 
     @Autowired
-    private EmailService emailService;
+    private CommentRepository commentRepository;
 
     @Autowired
     private QuestionAnswerMapper questionAnswerMapper;
@@ -491,13 +488,14 @@ public class ExamService {
         }
     }
 
+    @Transactional(rollbackFor = Throwable.class)
     public DeleteExamResponse deleteExam(DeleteExamRequest request) throws ServiceException {
         try {
             if (null == request) ServiceUtil.generateEmptyPayloadError();
 
-            List<DeleteExamDto> deleteExamDtos = new ArrayList<>();
+            List<DeleteListDto> deleteExamDtos = new ArrayList<>();
             for (Integer id : request.getExamIds()) {
-                DeleteExamDto deleteExamDto = new DeleteExamDto();
+                DeleteListDto deleteExamDto = new DeleteListDto();
                 deleteExamDto.setId(id);
                 Optional<Exam> exam = examRepository.findById(id);
                 if (!exam.isPresent()) {
@@ -512,10 +510,10 @@ public class ExamService {
                     deleteExamDtos.add(deleteExamDto);
                     continue;
                 }
-                exam.get().getQuestions().forEach(question -> {
-                    questionRepository.delete(question);
-                });
-                examRepository.delete(exam.get());
+                exam.get().getQuestions().removeAll(exam.get().getQuestions());
+                Exam newExam = examRepository.saveAndFlush(exam.get());
+                commentRepository.deleteAllByExamId(exam.get().getId());
+                examRepository.delete(newExam);
                 deleteExamDto.setSuccess(true);
                 deleteExamDto.setError(null);
                 deleteExamDtos.add(deleteExamDto);

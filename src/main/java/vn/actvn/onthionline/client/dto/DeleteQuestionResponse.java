@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteExamResponse {
-    List<DeleteListDto> deleteExamDtos;
+public class DeleteQuestionResponse {
+    List<DeleteListDto> deleteQuestionDtos;
 }
