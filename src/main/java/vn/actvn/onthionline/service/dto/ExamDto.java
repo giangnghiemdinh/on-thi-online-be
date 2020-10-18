@@ -12,6 +12,7 @@ import java.util.List;
 public class ExamDto {
     private Integer id;
     private String name;
+    private String code;
     private String subject;
     private String grade;
     private String description;

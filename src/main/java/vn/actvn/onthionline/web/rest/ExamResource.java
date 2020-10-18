@@ -69,6 +69,21 @@ public class ExamResource {
         }
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PostMapping("/find-by-code")
+//    public ResponseEntity<BaseDataResponse<AddExamResponse>> findByCode(@RequestBody BaseDataRequest<AddExamRequest> request, Principal currentUser) {
+//        try {
+//            AddExamResponse response = examService.add(request.getBody(), currentUser.getName());
+//            return ResponseUtil.wrap(response);
+//        } catch (ServiceException e) {
+//            LOGGER.error(this.getClass().getName(), e);
+//            return ResponseUtil.generateErrorResponse(e);
+//        } catch (Exception e) {
+//            LOGGER.error(this.getClass().getName(), e);
+//            return ResponseUtil.generateErrorResponse(e);
+//        }
+//    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/get-all")
     public ResponseEntity<BaseDataResponse<GetAllExamResponse>> getAllExam(@RequestBody BaseDataRequest<GetAllExamRequest> request) {

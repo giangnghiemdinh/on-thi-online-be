@@ -37,6 +37,7 @@ create table user_role (
 create table exam (
 	id int(11) not null primary key auto_increment,
     name varchar(255) not null COLLATE utf8_unicode_ci,
+    code varchar(50) not null COLLATE utf8_unicode_ci,
     subject varchar(50) not null COLLATE utf8_unicode_ci,
     grade varchar(50) not null COLLATE utf8_unicode_ci,
     num_question int(5) not null,

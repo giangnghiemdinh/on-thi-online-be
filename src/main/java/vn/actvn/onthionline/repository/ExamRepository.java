@@ -24,6 +24,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer>  {
     Optional<Exam> findById(@Param("id") Integer id);
 
     @Query(value = "from Exam e where (e.name like %:search%) \n" +
+            "or (e.code like %:search%) \n" +
             "or (e.subject like %:search%) \n" +
             "or (e.grade like %:search%) order by e.updatedDate desc")
     Page<Exam> findAllExam(Pageable pageable, @Param("search") String search);

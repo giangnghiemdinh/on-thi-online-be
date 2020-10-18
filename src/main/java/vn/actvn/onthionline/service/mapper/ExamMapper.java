@@ -21,6 +21,7 @@ public class ExamMapper {
         ExamDto examDto = new ExamDto();
         examDto.setId(exam.getId());
         examDto.setName(exam.getName());
+        examDto.setCode(exam.getCode());
         examDto.setDescription(exam.getDescription());
         examDto.setSubject(exam.getSubject());
         examDto.setGrade(exam.getGrade());
@@ -44,6 +45,7 @@ public class ExamMapper {
         Exam exam = new Exam();
         exam.setId(examDto.getId());
         exam.setName(examDto.getName());
+        exam.setCode(examDto.getCode());
         exam.setDescription(examDto.getDescription());
         exam.setSubject(examDto.getSubject());
         exam.setTime(examDto.getTime());

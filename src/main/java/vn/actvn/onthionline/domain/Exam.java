@@ -24,6 +24,9 @@ public class Exam implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "grade")
     private String grade;      // Cấp
 
@@ -80,6 +83,7 @@ public class Exam implements Serializable {
         return isActive() == exam.isActive() &&
                 Objects.equals(getId(), exam.getId()) &&
                 Objects.equals(getName(), exam.getName()) &&
+                Objects.equals(getCode(), exam.getCode()) &&
                 Objects.equals(getGrade(), exam.getGrade()) &&
                 Objects.equals(getSubject(), exam.getSubject()) &&
                 Objects.equals(getNumQuestion(), exam.getNumQuestion()) &&
@@ -89,12 +93,13 @@ public class Exam implements Serializable {
                 Objects.equals(getMixedQuestion(), exam.getMixedQuestion()) &&
                 Objects.equals(getUserCreated(), exam.getUserCreated()) &&
                 Objects.equals(getCreatedDate(), exam.getCreatedDate()) &&
-                Objects.equals(getUpdatedDate(), exam.getUpdatedDate());
+                Objects.equals(getUpdatedDate(), exam.getUpdatedDate()) &&
+                Objects.equals(getQuestions(), exam.getQuestions());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getGrade(), getSubject(), getNumQuestion(), getNumPeopleDid(), getDescription(), isActive(), getTime(), getMixedQuestion(), getUserCreated(), getCreatedDate(), getUpdatedDate());
+        return Objects.hash(getId(), getName(), getCode(), getGrade(), getSubject(), getNumQuestion(), getNumPeopleDid(), getDescription(), isActive(), getTime(), getMixedQuestion(), getUserCreated(), getCreatedDate(), getUpdatedDate(), getQuestions());
     }
 
     @Override
@@ -102,6 +107,7 @@ public class Exam implements Serializable {
         return "Exam{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
                 ", grade='" + grade + '\'' +
                 ", subject='" + subject + '\'' +
                 ", numQuestion=" + numQuestion +
@@ -113,6 +119,7 @@ public class Exam implements Serializable {
                 ", userCreated='" + userCreated + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
+                ", questions=" + questions +
                 '}';
     }
 }
