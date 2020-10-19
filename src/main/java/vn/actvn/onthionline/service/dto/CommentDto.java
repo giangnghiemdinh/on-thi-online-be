@@ -14,7 +14,6 @@ public class CommentDto {
     private Integer id;
     private String content;
     private Integer parentId;
-    private boolean isLike;
     private List<String> userLiked;
     private Date createdDate;
     private Date updatedDate;

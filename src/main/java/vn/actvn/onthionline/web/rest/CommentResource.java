@@ -14,6 +14,7 @@ import vn.actvn.onthionline.service.CommentService;
 import vn.actvn.onthionline.service.dto.CommentDto;
 import vn.actvn.onthionline.service.dto.CommentMessageDto;
 import vn.actvn.onthionline.service.dto.GetAllCommentDto;
+import vn.actvn.onthionline.service.dto.LikeDto;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,5 +36,12 @@ public class CommentResource {
     @SendTo("/exam/{id}")
     public CommentDto newComment(@DestinationVariable String id, @Payload CommentMessageDto comment) throws IOException {
         return commentService.addComment(comment);
+    }
+
+    @MessageMapping("exam/{id}/like")
+    @SendTo("/exam/{id}")
+    public CommentDto like(@DestinationVariable String id, @Payload LikeDto request) throws IOException {
+        LOGGER.info("Like {}", request);
+        return commentService.like(request);
     }
 }

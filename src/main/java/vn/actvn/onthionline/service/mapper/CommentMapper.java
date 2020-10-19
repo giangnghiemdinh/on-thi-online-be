@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentMapper {
     @Autowired
     private ImageService imageService;
 
-    public CommentDto toDto(Comment comment, String username) throws IOException {
+    public CommentDto toDto(Comment comment) throws IOException {
         if (null ==  comment)
             return null;
         CommentDto commentDto = new CommentDto();
@@ -26,8 +27,7 @@ public class CommentMapper {
         commentDto.setContent(comment.getContent());
         commentDto.setParentId(comment.getParentId());
         commentDto.setReplyComment(new ArrayList<>());
-        //commentDto.setUserLiked(getUserLikedToList(comment.getUserLiked()));
-        //Check isLiked;
+        commentDto.setUserLiked(getUserLikedToList(comment.getUserLiked()));
         commentDto.setCreatedDate(comment.getCreatedDate());
         commentDto.setUpdatedDate(comment.getUpdatedDate());
         commentDto.setFullNameUserCreated(comment.getUserCreated().getFullname());
@@ -38,6 +38,19 @@ public class CommentMapper {
     }
 
     public List<String> getUserLikedToList(String userLiked) {
+        if (null == userLiked || "".equalsIgnoreCase(userLiked)) return new ArrayList<>();
         return Arrays.asList(userLiked.split(Constant.SEPARATOR).clone());
+    }
+
+    public String listUserLikedToString(List<String> userLiked) {
+        String likedStr = "";
+        for (int i = 0; i < userLiked.size(); i++) {
+            if (i != userLiked.size() - 1) {
+                likedStr += userLiked.get(i) + Constant.SEPARATOR;
+            } else {
+                likedStr += userLiked.get(i);
+            }
+        }
+        return likedStr;
     }
 }

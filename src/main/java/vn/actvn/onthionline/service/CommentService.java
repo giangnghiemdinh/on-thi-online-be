@@ -14,6 +14,7 @@ import vn.actvn.onthionline.repository.UserRepository;
 import vn.actvn.onthionline.service.dto.CommentDto;
 import vn.actvn.onthionline.service.dto.CommentMessageDto;
 import vn.actvn.onthionline.service.dto.GetAllCommentDto;
+import vn.actvn.onthionline.service.dto.LikeDto;
 import vn.actvn.onthionline.service.mapper.CommentMapper;
 
 import java.io.IOException;
@@ -57,11 +58,11 @@ public class CommentService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(savedComment -> {
-                    LOGGER.info("New Comment {}", savedComment);
+//                    LOGGER.info("New Comment {}", savedComment);
                     return savedComment;
                 });
 
-        return commentMapper.toDto(newComment.get(), message.getUsername());
+        return commentMapper.toDto(newComment.get());
     }
 
     public List<CommentDto> getAll(GetAllCommentDto request) {
@@ -70,7 +71,7 @@ public class CommentService {
         commentDtos.stream().forEach(parent -> {
             parent.setReplyComment(handleListEntityToDto(comments, parent.getId(), request.getUsername()));
         });
-        LOGGER.info("Get All Comment {}", commentDtos);
+//        LOGGER.info("Get All Comment {}", commentDtos);
         return commentDtos;
     }
 
@@ -80,12 +81,48 @@ public class CommentService {
         comment.stream().forEach(cmt -> {
             CommentDto commentDto = null;
             try {
-                commentDto = commentMapper.toDto(cmt, username);
+                commentDto = commentMapper.toDto(cmt);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             commentDtos.add(commentDto);
         });
         return commentDtos;
+    }
+
+    public CommentDto like(LikeDto request) throws IOException {
+        Optional<Comment> comment = commentRepository.findById(request.getCommentId());
+        if (!comment.isPresent()) return null;
+
+        if (request.getType() == 1) {
+            List<String> userLiked = commentMapper.getUserLikedToList(comment.get().getUserLiked());
+            if (userLiked.size() > 0)
+                userLiked = userLiked.stream().filter(username -> !username.equalsIgnoreCase(request.getUsername())).collect(Collectors.toList());
+            userLiked.add(request.getUsername());
+            comment.get().setUserLiked(commentMapper.listUserLikedToString(userLiked));
+            Optional<Comment> newComment = Optional.of(
+                    Optional.of(commentRepository.saveAndFlush(comment.get())))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(savedComment -> {
+//                        LOGGER.info("New Like For Comment {}", savedComment);
+                        return savedComment;
+                    });
+            return commentMapper.toDto(newComment.get());
+        } else {
+            List<String> userLiked = commentMapper.getUserLikedToList(comment.get().getUserLiked());
+            if (userLiked.size() > 0)
+                userLiked = userLiked.stream().filter(username -> !username.equalsIgnoreCase(request.getUsername())).collect(Collectors.toList());
+            comment.get().setUserLiked(commentMapper.listUserLikedToString(userLiked));
+            Optional<Comment> newComment = Optional.of(
+                    Optional.of(commentRepository.saveAndFlush(comment.get())))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(savedComment -> {
+//                        LOGGER.info("Un Like For Comment {}", savedComment);
+                        return savedComment;
+                    });
+            return commentMapper.toDto(newComment.get());
+        }
     }
 }
