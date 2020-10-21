@@ -288,11 +288,13 @@ public class ExamService {
             LOGGER.info("{} do exam {}", username, exam);
             //Check correct answer
             Integer numOfCorrect = 0;
+            Integer numAnswer = 0;
 
             for (QuestionAnswerDto answer : request.getQuestionAnswer()) {
                 if (null == answer.getAnswer() || answer.getAnswer().size() == 0) continue;
                 Optional<Question> question = questionRepository.findByIdAndExamId(answer.getId(), exam.get().getId());
                 if (!question.isPresent()) continue;
+                if (answer.getAnswer().size() > 0) numAnswer++;
                 if (answer.getType().equalsIgnoreCase(Constant.TYPE_ONE)) {
                     if (question.get().getCorrectAnswer().equalsIgnoreCase(answer.getAnswer().get(0))) numOfCorrect++;
                     else continue;
