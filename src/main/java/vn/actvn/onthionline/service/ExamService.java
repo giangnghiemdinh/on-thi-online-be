@@ -316,7 +316,7 @@ public class ExamService {
             ExamHistory newExamHistory = new ExamHistory();
             newExamHistory.setTime(request.getTime());
             newExamHistory.setNumCorrectAns(numOfCorrect);
-            newExamHistory.setNumAns(request.getQuestionAnswer().size());
+            newExamHistory.setNumAns(numAnswer);
             newExamHistory.setQuestionResults(questionAnswerMapper.toListEntity(request.getQuestionAnswer()));
             newExamHistory.setNumOptionPicked(examHistoryMapper.listNumOptionPickedToString(request.getNumOptionPicked()));
             newExamHistory.setCreatedDate(new Date());
