@@ -5,7 +5,7 @@ use onthionline;
 create table user (
 	id int(11) not null primary key auto_increment,
     user_name varchar(50) not null,
-    full_name varchar(255) not null,
+    full_name varchar(255) not null COLLATE utf8_unicode_ci,
     email varchar(50) not null,
     password varchar(100) not null,
 	phone varchar(30),

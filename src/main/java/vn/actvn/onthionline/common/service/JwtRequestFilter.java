@@ -57,12 +57,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 final Claims claims = jwtTokenProvider.getAllClaimsFromToken(jwtToken);
 
                 if (!jwtTokenProvider.getClientIp(request).equals(claims.get(Constant.IP))) {
-                    LOGGER.info("JWT Token has another ip");
+                    LOGGER.info("Token of username: '{}' has another ip", jwtTokenProvider.getUsernameFromToken(jwtToken));
                     throw new AccessDeniedException(null);
                 }
 
                 if (!jwtTokenProvider.getUserAgent(request).equals(claims.get(Constant.USER_AGENT))) {
-                    LOGGER.info("JWT Token has another user_agent");
+                    LOGGER.info("Token of username: '{}' has another user_agent", jwtTokenProvider.getUsernameFromToken(jwtToken));
                     throw new AccessDeniedException(null);
                 }
 
