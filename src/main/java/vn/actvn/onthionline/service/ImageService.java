@@ -37,8 +37,13 @@ public class ImageService {
 
     public String getFile(String filePath) throws IOException {
         try {
-            byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
-            String imgBase64 = Base64.getEncoder().encodeToString(fileContent);
+            File file = new File(filePath);
+            String imgBase64 = "";
+            if (file.canRead()) {
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                imgBase64 = Base64.getEncoder().encodeToString(fileContent);
+            }
+
             return imgBase64;
         } catch (IOException e) {
             throw e;
